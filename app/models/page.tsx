@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 
-export default function () {
+export default function Models() {
   return (
     <div
       style={{
