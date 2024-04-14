@@ -5,10 +5,17 @@ import { BsFillCartFill, BsPerson } from "react-icons/bs";
 import { TbHome, TbTruckReturn } from "react-icons/tb";
 import { MdFavorite, MdOutlineSocialDistance } from "react-icons/md";
 import { GiColombianStatue } from "react-icons/gi";
+import ReactDOM from "react-dom";
+import Modal from "react-responsive-modal";
 
 const TopNav = () => {
   const [sideNav, setSideNav] = useState(false);
   console.log(sideNav);
+
+  const [open, setOpen] = useState(false);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
 
   return (
     <div className="max-w-[1520] mx-auto flex justify-between items-center p-4">
@@ -28,6 +35,18 @@ const TopNav = () => {
           placeholder="search 3D models"
         />
       </div>
+
+      <div>
+        <Modal open={open} onClose={onCloseModal} center>
+          <h2>Simple centered modal</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+            pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
+            hendrerit risus, sed porttitor quam.
+          </p>
+        </Modal>
+      </div>
+
       <button className="bg-green-700 text-white hidden md:flex items-center py-2 rounded-full border-none">
         Sign in
       </button>

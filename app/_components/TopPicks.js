@@ -7,7 +7,7 @@ const TopPicks = () => {
         <>
         <h1 className='text-green-600 font-bold text-2xl text-center py-2'>3D Models</h1>
         <div className='hidden lg:flex max-w[1520px] m-auto py-2 px=2'>
-            <splide options={{perPage: 4, gap: "0.5rem"}}>
+            <splide options={{perPage: 4, gap: "0.5rem", greg: 'free', arrows: false}}>
            {
             topPicks.map((item)=>{
                 return(
