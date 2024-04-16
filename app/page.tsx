@@ -1,8 +1,28 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import data from "./products.json";
+import { useDescope, useSession, useUser } from "@descope/nextjs-sdk/client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const { isAuthenticated, isSessionLoading, sessionToken } = useSession();
+  const router = useRouter();
+  const { user } = useUser();
+  const sdk = useDescope();
+  const handleLogout = () => {
+    sdk.logout();
+  };
+  useEffect(() => {
+    if (!isAuthenticated && !isSessionLoading) {
+      router.push("/sign-in");
+    }
+  }, [isSessionLoading, isAuthenticated]);
+
+  if (isSessionLoading) {
+    return <div>Loading</div>;
+  }
   return (
     <div
       style={{
@@ -14,6 +34,7 @@ export default function Home() {
         padding: "20px",
       }}
     >
+      <div>{user && `hello ${user.name}`}</div>
       <div style={{ display: "flex", gap: "20px", overflowX: "auto" }}>
         {data.items.map((item) => (
           <Link key={item.id} href={`/products/${item.id}`} passHref>
@@ -39,10 +60,12 @@ export default function Home() {
               </div>
               <h2>{item.name}</h2>
               <p>{item.description}</p>
+              <p>{item.grams} gr</p>
             </div>
           </Link>
         ))}
       </div>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }

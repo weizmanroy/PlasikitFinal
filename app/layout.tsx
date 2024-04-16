@@ -4,6 +4,7 @@ import "./globals.css";
 import TopNav from "./_components/TopNav";
 import TopHead from "./_components/TopHead";
 import Footer from "./_components/Footer";
+import { AuthProvider } from "../app/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,24 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <TopNav />
-        <TopHead />
-        {children}
-        <footer
-          style={{
-            border: "1px solid gray",
-            display: "flex",
-            height: "20vh",
-            textAlign: "center",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+    <AuthProvider projectId="P2fBgx8H3bG5LZPtQo20GYUBd7am">
+      <html lang="en">
+        <body className={inter.className}>
+          {/* <TopNav /> */}
+          <TopHead />
+          {children}
+
           <Footer />
-        </footer>
-      </body>
-    </html>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

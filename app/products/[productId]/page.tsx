@@ -22,6 +22,7 @@ export default function ProductDetail({ params }: any) {
       <h1>Product ID: {productId}</h1>
       <h2>Name: {product.name}</h2>
       <p>Description: {product.description}</p>
+      <p>Grams: {product.grams}</p>
       <img
         src={product.imageURL}
         alt={product.name}

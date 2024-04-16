@@ -15,7 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { AiOutlineMenu, AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["3D models", "Profile", "About"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
@@ -53,7 +53,7 @@ function ResponsiveAppBar() {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              fontFamily: "rubik light",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
@@ -117,7 +117,7 @@ function ResponsiveAppBar() {
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
+              fontFamily: "rubik light",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",

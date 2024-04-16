@@ -72,7 +72,9 @@ const TopNav = () => {
           className="absolute right-4 top-4 cursor-pointer"
         />
 
-        <h2 className="text-3xl p-4 text-green-800 font-bold">Plastikit</h2>
+        <h2 className="" text-3xl p-4 text-green-800 font-bold>
+          Plastikit
+        </h2>
         <nav>
           <ul className="flex flex-col p-4 text-gray-700">
             <li className="text-xl py-4 flex">
