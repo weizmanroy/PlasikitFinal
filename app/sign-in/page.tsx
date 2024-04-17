@@ -6,13 +6,13 @@ import Link from "next/link";
 export default function Login() {
   const router = useRouter();
   const onsucess = () => {
-    router.push("/");
+    router.push("/choose");
   };
   return (
     <div>
       <Descope flowId="sign-in" onSuccess={onsucess} />
       <Link href={`/sign-up`} passHref>
-        <div> Sign up</div>
+        <div>Sign up</div>
       </Link>
     </div>
   );

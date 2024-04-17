@@ -34,7 +34,23 @@ export default function Home() {
         padding: "20px",
       }}
     >
-      <div>{user && `hello ${user.name}`}</div>
+      <div style={{ marginBottom: "auto", textAlign: "center" }}>
+        {user && `Hello ${user.name}`}
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          top: "100px",
+          right: "10px",
+          border: "1px solid green",
+          padding: "5px",
+          backgroundColor: "lightgreen",
+        }}
+      >
+        {user &&
+          `${user.name} have ${user?.customAttributes?.grams || 0} grams`}
+      </div>
+
       <div style={{ display: "flex", gap: "20px", overflowX: "auto" }}>
         {data.items.map((item) => (
           <Link key={item.id} href={`/products/${item.id}`} passHref>

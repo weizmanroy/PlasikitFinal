@@ -4,22 +4,22 @@
             "id": "1",
             "name": "Elephant",
             "description": "A majestic elephant walking through the savannah.",
-            "grams": "120",
+            "grams": 120,
             "imageURL": "https://cdn.myminifactory.com/assets/object-assets/579fa5d479da4/images/720X720-7aff5bb4ac1816121fc2955c2abb3fc160fd8b95.jpg"
         },
         {
             "id": "2",
             "name": "Tiger",
             "description": "A fierce tiger prowling in the jungle.",
-            "grams": "50",
-            "imageURL": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/b/bengal-tiger_thumb.jpg"
+            "grams": 50,
+            "imageURL": "https://cdn.myminifactory.com/assets/object-assets/594a436bc6964/images/720X720-mike-the-tiger-1.jpg"
         },
         {
             "id": "3",
             "name": "Giraffe",
             "description": "A graceful giraffe grazing on tall trees.",
-            "grams": "200",
-            "imageURL": "https://cdn.mos.cms.futurecdn.net/8jwQJnLke8BTKjVeXKHM6k-1200-80.jpg"
+            "grams": 200,
+            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
         }
     ]
 }
