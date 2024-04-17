@@ -2,7 +2,7 @@
 import { log } from "console";
 import data from "../../products.json";
 import { use } from "react";
-import { useSession } from "@descope/nextjs-sdk/client";
+import { useSession, useUser } from "@descope/nextjs-sdk/client";
 
 function getProduct(id: any) {
   return data.items.find((p) => p.id === id);
@@ -12,6 +12,7 @@ export default function ProductDetail({ params }: any) {
   const productId = params.productId;
   const product = getProduct(productId);
   const sess = useSession();
+  const { user } = useUser();
   // Handle case where product is not found
   if (!product) {
     return (
@@ -30,7 +31,7 @@ export default function ProductDetail({ params }: any) {
           "Content-Type": "application/json",
           // Include other headers as necessary
         },
-        body: JSON.stringify({ productId }),
+        body: JSON.stringify({ productId, userId: user.userId }),
       })
         .then((response) => {
           if (!response.ok) {

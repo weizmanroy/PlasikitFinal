@@ -12,6 +12,8 @@ const sdk = createSdk({
 	// Defaults to process.env.DESCOPE_MANAGEMENT_KEY
 	managementKey: 'K2fDgX3DxYCZ9hmXjGAkyUC10m4lsaoxSwoXOmYlGdx03Lw6duAPAJpdvvEJtisWiVKZIKw'
 });
+
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 	
 function getProduct(id: any) {
 	return data.items.find((p) => p.id === id);
@@ -20,21 +22,12 @@ export async function POST(request: NextRequest) {
 	const body = await request.json();
 
 	const productId = body.productId;
+	const userId = body.userId;
 	
 	const product = getProduct(productId);
 	const grams = product?.grams as any as number
-	console.log('@@@ start')
-	const DS = (request as any).cookies.get('DS').value || '';
-	console.log('@@@ DS', DS.substring(0, 10) + '...');
-	let authInfo: any
-	try{
-		authInfo = await sdk.validateSession(DS);
-		console.log(authInfo)
 
-	}	catch (hex){
-		console.log("Ops", hex)
-	}
-	const userId = authInfo.token.sub as string;
+
 	console.log('@@@ userId', userId);
 	const res = await sdk.management.user.loadByUserId(userId);
 	if (!res.ok) {
@@ -47,10 +40,14 @@ export async function POST(request: NextRequest) {
 	console.log('@@@ User', user);
 
 	const currentGrams = (user as any).customAttributes.grams || 0;
+	const currentSpent = (user as any).customAttributes.spentGrams || 0;
+
 
 	const newGrams = currentGrams - grams as number;
-
+	const newSpent = currentSpent + grams as number;
 	const updateRes = await sdk.management.user.updateCustomAttribute(user.loginIds[0]!, 'grams', newGrams);
+	const updateSpe = await sdk.management.user.updateCustomAttribute(user.loginIds[0]!, 'spentGrams', newSpent);
+
 	console.log('@@@ updateRes', updateRes);
 	return new NextResponse(JSON.stringify({
 		message: "OK"
