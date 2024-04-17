@@ -51,6 +51,39 @@ export default function Home() {
           `${user.name} have ${user?.customAttributes?.grams || 0} grams`}
       </div>
 
+      <div
+        style={{
+          position: "absolute",
+          top: "140px",
+          right: "10px",
+          border: "1px solid green",
+          padding: "5px",
+          backgroundColor: "lightgreen",
+        }}
+      >
+        {user &&
+          `${user.name} Spent in total ${
+            user?.customAttributes?.Spent || 0
+          }   grams`}
+      </div>
+
+      <div
+        style={{
+          position: "absolute",
+          top: "180px",
+          right: "10px",
+          border: "1px solid green",
+          padding: "5px",
+          backgroundColor: "lightgreen",
+        }}
+      >
+        {user &&
+          `Grams you gained in total is: ${
+            (user?.customAttributes?.Spent || 0) +
+            (user?.customAttributes?.grams || 0)
+          } grams`}
+      </div>
+
       <div style={{ display: "flex", gap: "20px", overflowX: "auto" }}>
         {data.items.map((item) => (
           <Link key={item.id} href={`/products/${item.id}`} passHref>
