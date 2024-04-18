@@ -81,7 +81,7 @@ export default function ProductDetail({ params }: any) {
         onClick={() => (window.location.href = "/")}
         style={{
           position: "absolute",
-          top: "20px",
+          top: "120px",
           left: "20px",
           border: "2px solid blue",
           backgroundColor: "lightblue",
