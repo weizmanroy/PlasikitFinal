@@ -12,14 +12,133 @@
             "name": "Tiger",
             "description": "A fierce tiger prowling in the jungle.",
             "grams": 50,
-            "imageURL": "https://cdn.myminifactory.com/assets/object-assets/594a436bc6964/images/720X720-mike-the-tiger-1.jpg"
+            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
         },
         {
             "id": "3",
             "name": "Giraffe",
             "description": "A graceful giraffe grazing on tall trees.",
             "grams": 200,
+            "imageURL": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/h/hippopotamus_thumb.ngsversion.1475824629995.adapt.1900.1.jpg"
+        },
+        {
+            "id": "4",
+            "name": "Lion",
+            "description": "The king of the jungle, lion with majestic mane.",
+            "grams": 180,
+            "imageURL": "https://cdn.mos.cms.futurecdn.net/JPrc5ymUuR4Lq3KgyfPHT4.jpg"
+        },
+        {
+            "id": "5",
+            "name": "Zebra",
+            "description": "A striking zebra with black and white stripes.",
+            "grams": 90,
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Zebras.jpg"
+        },
+        {
+            "id": "6",
+            "name": "Cheetah",
+            "description": "A swift cheetah sprinting across the plains.",
+            "grams": 70,
             "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
+        },
+        {
+            "id": "7",
+            "name": "Hippopotamus",
+            "description": "A large hippopotamus enjoying a swim in the river.",
+            "grams": 300,
+            "imageURL": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/h/hippopotamus_thumb.ngsversion.1475824629995.adapt.1900.1.jpg"
+        },
+        {
+            "id": "8",
+            "name": "Gorilla",
+            "description": "A powerful gorilla sitting in its natural habitat.",
+            "grams": 250,
+            "imageURL": "https://cdn.myminifactory.com/assets/object-assets/579fa5d479da4/images/720X720-7aff5bb4ac1816121fc2955c2abb3fc160fd8b95.jpg"
+        },
+        {
+            "id": "9",
+            "name": "Panda",
+            "description": "An adorable panda munching on bamboo.",
+            "grams": 160,
+            "imageURL": "https://www.thesprucepets.com/thmb/awv-2hWmtj9K7ry1sT9F5k8yf2c=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/lion-lying-on-a-rock-royalty-free-image-513242879-57d98f9f5f9b589b0ab65b75.jpg"
+        },
+        {
+            "id": "10",
+            "name": "Kangaroo",
+            "description": "A kangaroo hopping through the Australian outback.",
+            "grams": 130,
+            "imageURL": "https://www.thesprucepets.com/thmb/awv-2hWmtj9K7ry1sT9F5k8yf2c=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/lion-lying-on-a-rock-royalty-free-image-513242879-57d98f9f5f9b589b0ab65b75.jpg"
+        },
+        {
+            "id": "11",
+            "name": "Polar Bear",
+            "description": "A polar bear in its icy habitat, hunting for food.",
+            "grams": 350,
+            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
+        },
+        {
+            "id": "12",
+            "name": "Rhino",
+            "description": "A massive rhinoceros grazing peacefully in the grasslands.",
+            "grams": 400,
+            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
+        },
+        {
+            "id": "13",
+            "name": "Penguin",
+            "description": "A cute penguin waddling on ice.",
+            "grams": 70,
+            "imageURL": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/A_delight_of_Penguins.jpg/1200px-A_delight_of_Penguins.jpg"
+        },
+        {
+            "id": "14",
+            "name": "Ostrich",
+            "description": "A tall ostrich running across the desert.",
+            "grams": 150,
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Zebras.jpg"
+        },
+        {
+            "id": "15",
+            "name": "Wolf",
+            "description": "A solitary wolf howling at the moon.",
+            "grams": 180,
+            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
+        },
+        {
+            "id": "16",
+            "name": "Gazelle",
+            "description": "A graceful gazelle leaping across the savannah.",
+            "grams": 100,
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Zebras.jpg"
+        },
+        {
+            "id": "17",
+            "name": "Leopard",
+            "description": "A sleek leopard camouflaged in the trees.",
+            "grams": 120,
+            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
+        },
+        {
+            "id": "18",
+            "name": "Crocodile",
+            "description": "A menacing crocodile lurking in the water.",
+            "grams": 400,
+            "imageURL": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/h/hippopotamus_thumb.ngsversion.1475824629995.adapt.1900.1.jpg"
+        },
+        {
+            "id": "19",
+            "name": "Koala",
+            "description": "A cute koala sleeping in a eucalyptus tree.",
+            "grams": 80,
+            "imageURL": "https://cdn.myminifactory.com/assets/object-assets/579fa5d479da4/images/720X720-7aff5bb4ac1816121fc2955c2abb3fc160fd8b95.jpg"
+        },
+        {
+            "id": "20",
+            "name": "Orangutan",
+            "description": "An intelligent orangutan swinging through the trees.",
+            "grams": 200,
+            "imageURL": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Orang_Utan%2C_Semenggok_Forest_Reserve%2C_Sarawak%2C_Borneo%2C_Malaysia.JPG/1200px-Orang_Utan%2C_Semenggok_Forest_Reserve%2C_Sarawak%2C_Borneo%2C_Malaysia.JPG"
         }
     ]
 }

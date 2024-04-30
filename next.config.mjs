@@ -7,7 +7,10 @@ const nextConfig = {
       "cdn.myminifactory.com",
       "www.nationalgeographic.com",
       "cdn.mos.cms.futurecdn.net",
-      "cdn.thingiverse.com", // Add this line
+      "cdn.thingiverse.com",
+      "www.thesprucepets.com",
+      "cdn.britannica.com",
+      "upload.wikimedia.org",
     ],
   },
 };
