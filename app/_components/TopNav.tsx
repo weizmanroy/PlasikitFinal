@@ -23,7 +23,7 @@ const TopNav = () => {
         <div onClick={() => setSideNav(!sideNav)} className="cursor-pointer">
           <AiOutlineMenu size={25} />
         </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl px-2 text-green">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl px-2 text-green font-rubik">
           Plastikit
         </h1>
       </div>

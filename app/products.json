@@ -19,7 +19,7 @@
             "name": "Giraffe",
             "description": "A graceful giraffe grazing on tall trees.",
             "grams": 200,
-            "imageURL": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/h/hippopotamus_thumb.ngsversion.1475824629995.adapt.1900.1.jpg"
+            "imageURL": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/g/giraffe_thumb.ngsversion.1476990772156.adapt.1900.1.jpg"
         },
         {
             "id": "4",
@@ -40,7 +40,7 @@
             "name": "Cheetah",
             "description": "A swift cheetah sprinting across the plains.",
             "grams": 70,
-            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Cheetah.jpg"
         },
         {
             "id": "7",
@@ -68,7 +68,7 @@
             "name": "Kangaroo",
             "description": "A kangaroo hopping through the Australian outback.",
             "grams": 130,
-            "imageURL": "https://www.thesprucepets.com/thmb/awv-2hWmtj9K7ry1sT9F5k8yf2c=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/lion-lying-on-a-rock-royalty-free-image-513242879-57d98f9f5f9b589b0ab65b75.jpg"
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Kangaroo.jpg"
         },
         {
             "id": "11",
@@ -82,7 +82,7 @@
             "name": "Rhino",
             "description": "A massive rhinoceros grazing peacefully in the grasslands.",
             "grams": 400,
-            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Rhino.jpg"
         },
         {
             "id": "13",
@@ -96,42 +96,42 @@
             "name": "Ostrich",
             "description": "A tall ostrich running across the desert.",
             "grams": 150,
-            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Zebras.jpg"
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Ostrich.jpg"
         },
         {
             "id": "15",
             "name": "Wolf",
             "description": "A solitary wolf howling at the moon.",
             "grams": 180,
-            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Wolf.jpg"
         },
         {
             "id": "16",
             "name": "Gazelle",
             "description": "A graceful gazelle leaping across the savannah.",
             "grams": 100,
-            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Zebras.jpg"
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Gazelle.jpg"
         },
         {
             "id": "17",
             "name": "Leopard",
             "description": "A sleek leopard camouflaged in the trees.",
             "grams": 120,
-            "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Leopard.jpg"
         },
         {
             "id": "18",
             "name": "Crocodile",
             "description": "A menacing crocodile lurking in the water.",
             "grams": 400,
-            "imageURL": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/h/hippopotamus_thumb.ngsversion.1475824629995.adapt.1900.1.jpg"
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Crocodile.jpg"
         },
         {
             "id": "19",
             "name": "Koala",
             "description": "A cute koala sleeping in a eucalyptus tree.",
             "grams": 80,
-            "imageURL": "https://cdn.myminifactory.com/assets/object-assets/579fa5d479da4/images/720X720-7aff5bb4ac1816121fc2955c2abb3fc160fd8b95.jpg"
+            "imageURL": "https://cdn.britannica.com/37/93937-050-526314A9/Koala.jpg"
         },
         {
             "id": "20",

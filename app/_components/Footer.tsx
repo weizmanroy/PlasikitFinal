@@ -3,7 +3,7 @@ import { FaDribbbleSquare, FaGithubSquare } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="px-4 py-2 bg-[#d1dad1]">
+    <footer className="px-4 py-2 bg-[#d9e3d7]">
       <div className="max-w-[1520px] mx-auto py-16 grid lg:grid-cols-3 gap-8 text-black-300">
         <div>
           <h1 className="w-full text-3xl font-bold text-green-500">
