@@ -9,8 +9,8 @@
         },
         {
             "id": "2",
-            "name": "Tiger",
-            "description": "A fierce tiger prowling in the jungle.",
+            "name": "Benchy",
+            "description": "A small boat.",
             "grams": 50,
             "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG"
         },
@@ -19,7 +19,7 @@
             "name": "Giraffe",
             "description": "A graceful giraffe grazing on tall trees.",
             "grams": 200,
-            "imageURL": "https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/g/giraffe_thumb.ngsversion.1476990772156.adapt.1900.1.jpg"
+            "imageURL": "/pictures/models/giraffe.png"
         },
         {
             "id": "4",

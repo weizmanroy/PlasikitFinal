@@ -12,63 +12,21 @@ export default function Profile() {
     const selectedImage = event.target.files[0];
     setImage(URL.createObjectURL(selectedImage));
   };
-
+  const totalGrams =
+    (user?.customAttributes?.grams || 0) +
+    (user?.customAttributes?.spentGrams || 0);
   return (
     <div className="container">
       <h1>Profile Page</h1>
       <div
         style={{
           position: "absolute",
-          top: "100px",
-          left: "10px",
+          top: "50px",
+          right: "25px",
           border: "1px solid green",
           padding: "5px",
-          backgroundColor: "#c2fbd7",
-          borderRadius: "5px",
-        }}
-      >
-        {user && `Hello ${user.name}`}
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          top: "100px",
-          right: "10px",
-          border: "1px solid green",
-          padding: "5px",
-          backgroundColor: "#c2fbd7",
-          borderRadius: "100px",
-          boxShadow:
-            "rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px", // Apply box shadow
-          color: "green",
-          display: "inline-block",
-          fontFamily: "rubik light",
-          padding: "7px 20px",
-          textAlign: "center",
-          textDecoration: "none",
-          transition: "all 250ms",
-          fontSize: "16px",
-          userSelect: "none",
-          WebkitUserSelect: "none",
-          touchAction: "manipulation",
-        }}
-      >
-        {user &&
-          `${user.name} have ${user?.customAttributes?.grams || 0} grams`}
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          top: "150px",
-          right: "10px",
-          border: "1px solid green",
-          padding: "5px",
-          backgroundColor: "#c2fbd7",
-          borderRadius: "100px",
-          boxShadow:
-            "rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px",
+          backgroundColor: "#e6f0e8",
+          borderRadius: "10px",
           color: "green",
           display: "inline-block",
           fontFamily:
@@ -77,46 +35,29 @@ export default function Profile() {
           textAlign: "center",
           textDecoration: "none",
           transition: "all 250ms",
-          fontSize: "16px",
+          fontSize: "20px",
           userSelect: "none",
           WebkitUserSelect: "none",
           touchAction: "manipulation",
         }}
       >
-        {user &&
-          `${user.name} spent ${user?.customAttributes?.spentGrams || 0} grams`}
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          top: "200px",
-          right: "10px",
-          border: "1px solid green",
-          padding: "5px",
-          backgroundColor: "#c2fbd7",
-          borderRadius: "100px",
-          boxShadow:
-            "rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px",
-          color: "green",
-          display: "inline-block",
-          fontFamily:
-            "CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif",
-          padding: "7px 20px",
-          textAlign: "center",
-          textDecoration: "none",
-          transition: "all 250ms",
-          fontSize: "16px",
-          userSelect: "none",
-          WebkitUserSelect: "none",
-          touchAction: "manipulation",
-        }}
-      >
-        {user &&
-          `${user.name} has total (${
-            user?.customAttributes?.spentGrams +
-            (user?.customAttributes?.grams || 0)
-          } grams)`}
+        {user && (
+          <>
+            <div>
+              <strong>Hello "{user.name}"</strong>
+            </div>
+            <div>-------------</div>
+            <div>
+              You have: <strong>{user?.customAttributes?.grams || 0}</strong>{" "}
+            </div>
+            <div>
+              Spent: <strong>{user?.customAttributes?.spentGrams || 0}</strong>{" "}
+            </div>
+            <div>
+              Total grams so far: <strong>{totalGrams}</strong>{" "}
+            </div>
+          </>
+        )}
       </div>
 
       <div className="profile-picture">

@@ -24,7 +24,7 @@ const TopNav = () => {
           <AiOutlineMenu size={25} />
         </div>
         <h1 className="text-2xl sm:text-3xl lg:text-4xl px-2 text-green font-rubik">
-          Plastikit
+          Plastikitdddd
         </h1>
       </div>
       <div className="bg-gray-200 rounded-full flex items-center px-2 w-[200px] sm:w-[400px] lg:w-[500px]">

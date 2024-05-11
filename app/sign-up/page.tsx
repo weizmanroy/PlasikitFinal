@@ -9,7 +9,7 @@ export default function Page() {
     router.push("/");
   };
   return (
-    <div>
+    <div style={{ width: "40%", margin: "0 auto" }}>
       <Descope flowId="sign-up" onSuccess={onsucess} />
       <Link href={`/sign-in`} passHref>
         <div> Sign in</div>

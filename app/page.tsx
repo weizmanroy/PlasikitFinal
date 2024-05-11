@@ -1,21 +1,71 @@
-// Wrap the parent component with the `use client` pragma
+// Home.js
+
 "use client";
 
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import data from "./products.json";
 import { useDescope, useSession, useUser } from "@descope/nextjs-sdk/client";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
+const UserDetail = ({ user }) => {
+  const totalGrams =
+    (user?.customAttributes?.grams || 0) +
+    (user?.customAttributes?.spentGrams || 0);
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: "50px",
+        right: "25px",
+        border: "1px solid green",
+        padding: "5px",
+        backgroundColor: "#e6f0e8",
+        borderRadius: "10px",
+        color: "green",
+        display: "inline-block",
+        fontFamily:
+          "CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif",
+        padding: "7px 20px",
+        textAlign: "center",
+        textDecoration: "none",
+        transition: "all 250ms",
+        fontSize: "20px",
+        userSelect: "none",
+        WebkitUserSelect: "none",
+        touchAction: "manipulation",
+      }}
+    >
+      {user && (
+        <>
+          <div>
+            <strong>Hello "{user.name}"</strong>
+          </div>
+          <div>-------------</div>
+          <div>
+            You have: <strong>{user?.customAttributes?.grams || 0}</strong>{" "}
+          </div>
+          <div>
+            Spent: <strong>{user?.customAttributes?.spentGrams || 0}</strong>{" "}
+          </div>
+          <div>
+            Total grams so far: <strong>{totalGrams}</strong>{" "}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 export default function Home() {
-  const { isAuthenticated, isSessionLoading, sessionToken } = useSession();
+  const { isAuthenticated, isSessionLoading } = useSession();
   const router = useRouter();
   const { user } = useUser();
   const sdk = useDescope();
-  const handleLogout = () => {
-    sdk.logout();
-  };
+
   useEffect(() => {
     if (!isAuthenticated && !isSessionLoading) {
       router.push("/sign-in");
@@ -25,6 +75,12 @@ export default function Home() {
   if (isSessionLoading) {
     return <div>Loading</div>;
   }
+
+  const handleLogout = () => {
+    sdk.logout();
+    router.push("/sign-in");
+  };
+
   return (
     <div
       style={{
@@ -34,25 +90,33 @@ export default function Home() {
         alignItems: "center",
         justifyContent: "center",
         padding: "20px",
+        position: "relative",
       }}
     >
+      <UserDetail user={user} />
+
       <button
         onClick={() => (window.location.href = "/choose")}
-        style={{
-          position: "absolute",
-          top: "120px",
-          left: "20px",
-          backgroundColor: "green",
-          padding: "10px 20px",
-          borderRadius: "5px",
-          fontSize: "16px",
-          fontWeight: "bold",
-          color: "white",
-          cursor: "pointer",
-        }}
+        type="button"
+        className="fixed top-20 left-5 flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
       >
-        Back
+        <svg
+          className="w-5 h-5 rtl:rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+          />
+        </svg>
+        <span>Back</span>
       </button>
+
       <button
         onClick={handleLogout}
         style={{
@@ -60,123 +124,23 @@ export default function Home() {
           top: "20px",
           right: "20px",
           cursor: "pointer",
-          fontFamily: "rubik light",
+          fontFamily: "Light 300",
           padding: "7px 20px",
           textAlign: "center",
           textDecoration: "none",
-          transition: "all 250ms",
-          fontSize: "16px",
+          transition: "background-color 0.3s", // Add transition for background-color
+          fontSize: "12px",
           userSelect: "none",
           WebkitUserSelect: "none",
           touchAction: "manipulation",
           color: "white",
+          display: "flex", // Make the button a flex container
+          alignItems: "center", // Center the content vertically
         }}
       >
         Logout
+        <ExitToAppIcon style={{ marginLeft: "5px" }} /> {/* Add exit icon */}
       </button>
-
-      <div
-        style={{
-          position: "absolute",
-          top: "100px",
-          left: "10px",
-          border: "1px solid green",
-          padding: "5px",
-          backgroundColor: "#c2fbd7",
-          borderRadius: "5px",
-        }}
-      >
-        {user && `Hello ${user.name}`}
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          top: "100px",
-          right: "10px",
-          border: "1px solid green",
-          padding: "5px",
-          backgroundColor: "#c2fbd7",
-          borderRadius: "100px",
-          boxShadow:
-            "rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px", // Apply box shadow
-          color: "green",
-          display: "inline-block",
-          fontFamily: "rubik light",
-          padding: "7px 20px",
-          textAlign: "center",
-          textDecoration: "none",
-          transition: "all 250ms",
-          fontSize: "16px",
-          userSelect: "none",
-          WebkitUserSelect: "none",
-          touchAction: "manipulation",
-        }}
-      >
-        {user &&
-          `${user.name} have ${user?.customAttributes?.grams || 0} grams`}
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          top: "150px",
-          right: "10px",
-          border: "1px solid green",
-          padding: "5px",
-          backgroundColor: "#c2fbd7",
-          borderRadius: "100px",
-          boxShadow:
-            "rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px",
-          color: "green",
-          display: "inline-block",
-          fontFamily:
-            "CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif",
-          padding: "7px 20px",
-          textAlign: "center",
-          textDecoration: "none",
-          transition: "all 250ms",
-          fontSize: "16px",
-          userSelect: "none",
-          WebkitUserSelect: "none",
-          touchAction: "manipulation",
-        }}
-      >
-        {user &&
-          `${user.name} spent ${user?.customAttributes?.spentGrams || 0} grams`}
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          top: "200px",
-          right: "10px",
-          border: "1px solid green",
-          padding: "5px",
-          backgroundColor: "#c2fbd7",
-          borderRadius: "100px",
-          boxShadow:
-            "rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px",
-          color: "green",
-          display: "inline-block",
-          fontFamily:
-            "CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif",
-          padding: "7px 20px",
-          textAlign: "center",
-          textDecoration: "none",
-          transition: "all 250ms",
-          fontSize: "16px",
-          userSelect: "none",
-          WebkitUserSelect: "none",
-          touchAction: "manipulation",
-        }}
-      >
-        {user &&
-          `${user.name} has total (${
-            user?.customAttributes?.spentGrams +
-            (user?.customAttributes?.grams || 0)
-          } grams)`}
-      </div>
 
       <div style={{ maxHeight: "600px", width: "70%" }}>
         {data.items.map((item, index) => (
@@ -185,16 +149,15 @@ export default function Home() {
               style={{
                 textDecoration: "none",
                 color: "inherit",
-
                 border: "1px solid #ccc",
                 padding: "10px",
                 minWidth: "300px",
                 maxWidth: "300px",
-                marginRight: index % 3 === 2 ? "0" : "20px", // Add margin right except for the last item in a row
+                marginRight: index % 3 === 2 ? "0" : "20px",
                 marginBottom: "20px",
                 cursor: "pointer",
                 display: "inline-block",
-                verticalAlign: "top", // Align items to the top of the container
+                verticalAlign: "top",
               }}
             >
               <div
