@@ -31,7 +31,6 @@ export default function Profile() {
           display: "inline-block",
           fontFamily:
             "CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif",
-          padding: "7px 20px",
           textAlign: "center",
           textDecoration: "none",
           transition: "all 250ms",
