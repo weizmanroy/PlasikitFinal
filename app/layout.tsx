@@ -25,8 +25,6 @@ export default function RootLayout({
           {/* <TopNav /> */}
           <TopHead />
           {children}
-
-          <Footer />
         </body>
       </html>
     </AuthProvider>

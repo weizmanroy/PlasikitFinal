@@ -11,6 +11,8 @@ const nextConfig = {
       "www.thesprucepets.com",
       "cdn.britannica.com",
       "upload.wikimedia.org",
+      "blenderartists.org",
+      "pic2-cdn.creality.com",
     ],
   },
 };

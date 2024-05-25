@@ -2,217 +2,195 @@
 import { useRouter } from "next/navigation";
 import { Descope } from "@descope/nextjs-sdk";
 import Link from "next/link";
-import { Card, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Card, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import { useDescope, useSession, useUser } from "@descope/nextjs-sdk/client";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 import printModelImage from "../../pictures/pngtree-3d-printer-manufacturing-isolated-on-white-background-png-image_4821024.png";
 import recycleBottleImage from "../../pictures/watercolor-illustration-of-a-green-recycle-sign-and-a-plastic-bottle-reuse-symbol-for-ecological-design-wasteless-lifestyle-isolated-drawn-by-hand-png.png";
+import { useEffect } from "react";
+import Footer from "../_components/Footer";
 
 export default function Choose() {
-  const { isAuthenticated, isSessionLoading, sessionToken } = useSession();
+  const { isAuthenticated, isSessionLoading } = useSession();
   const router = useRouter();
   const { user } = useUser();
   const sdk = useDescope();
+
+  useEffect(() => {
+    if (!isAuthenticated && !isSessionLoading) {
+      router.push("/sign-in");
+    }
+  }, [isSessionLoading, isAuthenticated]);
+
+  if (isSessionLoading) {
+    return <div>Loading</div>;
+  }
 
   const handleLogout = () => {
     sdk.logout();
     router.push("/sign-in");
   };
 
+  const tooltipStyles = {
+    backgroundColor: "#d7ffb1",
+    color: "black",
+    maxWidth: "500px",
+    marginTop: "10px",
+    borderRadius: "8px",
+    padding: "10px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    fontSize: "14px", // Reduced font size
+    fontFamily: "Roboto, sans-serif",
+  };
+
   const printModelTooltip = (
     <Tooltip
       id="printModelTooltip"
-      style={{
-        backgroundColor: "#d7ffb1",
-        color: "black",
-        maxWidth: "500px",
-        marginTop: "10px", // Add space from the top
-      }}
+      style={{ ...tooltipStyles, maxWidth: "500px" }}
     >
-      On this page, you have the opportunity to select a model for printing. By
-      recycling bottles and converting them into a reel usable by the printer,
-      you've earned points that can be redeemed for printing. Now, you can
-      utilize these points to print 3D models from the plastikit library.
+      Select a model for 3D printing using your earned points.
     </Tooltip>
   );
 
   const recycleBottleTooltip = (
     <Tooltip
       id="recycleBottleTooltip"
-      style={{
-        backgroundColor: "#d7ffb1",
-        color: "black",
-        maxWidth: "600px",
-        marginTop: "10px", // Add space from the top
-      }}
+      style={{ ...tooltipStyles, maxWidth: "600px" }}
     >
-      In this window, you can recycle a plastic bottle by transforming it into a
-      coil for printing. Upon completing the recycling process, you will earn
-      points directly to your account, which you can later redeem for printing.
+      Recycle plastic bottles into a filament for printing.
     </Tooltip>
   );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row", // Arrange cards horizontally
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <div>
       <div
         style={{
-          position: "absolute",
-          top: "100px",
-          left: "10px",
-          border: "1px solid green",
-          padding: "5px",
-          backgroundColor: "#c2fbd7",
-          borderRadius: "5px",
+          display: "flex",
+          flexDirection: "row", // Arrange cards horizontally
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          paddingRight: "20px", // Add padding to move the pictures to the right
         }}
       >
-        {user && `Hello ${user.name}`}
-      </div>
-
-      <Link href={`/sign-in`} passHref>
-        <button
-          onClick={handleLogout}
+        <div
           style={{
             position: "absolute",
-            top: "20px",
-            right: "20px",
-            cursor: "pointer",
-            fontFamily: "Light 300",
-            padding: "7px 20px",
-            textAlign: "center",
-            textDecoration: "none",
-            transition: "background-color 0.3s", // Add transition for background-color
-            fontSize: "12px",
-            userSelect: "none",
-            WebkitUserSelect: "none",
-            touchAction: "manipulation",
-            color: "white",
-            display: "flex", // Make the button a flex container
-            alignItems: "center", // Center the content vertically
+            top: "100px",
+            left: "10px",
+            border: "1px solid green",
+            padding: "5px",
+            backgroundColor: "#c2fbd7",
+            borderRadius: "5px",
           }}
         >
-          Logout
-          <ExitToAppIcon style={{ marginLeft: "5px" }} /> {/* Add exit icon */}
-        </button>
-      </Link>
+          {user && `Hello ${user.name}`}
+        </div>
 
-      {/* Print a 3D model card */}
-      <OverlayTrigger
-        placement="top"
-        overlay={printModelTooltip}
-        style={{ backgroundColor: "green" }}
-      >
-        <Link href={`/`} passHref>
-          <Card
-            style={{
-              width: "25rem", // Increase card width
-              margin: "10px",
-              textAlign: "center", // Center the content
-              marginBottom: "150px", // Push the card up a bit
-              transition: "transform 0.3s", // Add transition for transform
-              position: "relative", // Ensure proper positioning for tooltip
-            }}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          {/* Print a 3D model card */}
+          <OverlayTrigger
+            placement="top"
+            overlay={printModelTooltip}
+            style={{ backgroundColor: "green" }}
           >
             <Link href={`/`} passHref>
-              <Card.Img
-                variant="top"
-                src={printModelImage.src}
-                alt="Print Model Image"
-                style={{ height: "390px", transition: "transform 0.3s" }} // Add transition for transform
-                onMouseOver={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.3)")
-                }
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
-              />
-            </Link>
-            <Card.Body
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <Link href={`/`} passHref>
-                <Button
-                  variant="primary"
+              <Card
+                style={{
+                  width: "25rem", // Increase card width
+                  margin: "10px",
+                  textAlign: "center", // Center the content
+                  marginBottom: "100px", // Push the card up a bit
+                  transition: "transform 0.3s", // Add transition for transform
+                  position: "relative", // Ensure proper positioning for tooltip
+                }}
+              >
+                <Card.Img
+                  variant="top"
+                  src={printModelImage.src}
+                  alt="Print Model Image"
                   style={{
-                    fontSize: "24px",
-                    fontFamily: "light 300",
-                    transition: "transform 0.3s", // Add transition for transform
+                    height: "300px",
+                    transition: "transform 0.3s",
+                    marginLeft: "30px", // Move the picture to the right
+                  }}
+                  onMouseOver={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.3)")
+                  }
+                  onMouseOut={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  }
+                />
+                <Card.Body
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
                   }}
                 >
-                  Print a 3D model
-                </Button>
-              </Link>
-            </Card.Body>
-          </Card>
-        </Link>
-      </OverlayTrigger>
+                  <Card.Text>Print a 3D model</Card.Text>
+                  <Link href={`/`} passHref></Link>
+                </Card.Body>
+              </Card>
+            </Link>
+          </OverlayTrigger>
 
-      {/* Recycle a bottle card */}
-      <OverlayTrigger
-        placement="top"
-        overlay={recycleBottleTooltip}
-        style={{ backgroundColor: "green" }}
-      >
-        <Link href={`/recycle`} passHref>
-          <Card
-            style={{
-              width: "25rem", // Increase card width
-              margin: "10px",
-              textAlign: "center", // Center the content
-              marginBottom: "150px", // Push the card up a bit
-              transition: "transform 0.3s", // Add transition for transform
-              position: "relative", // Ensure proper positioning for tooltip
-            }}
+          {/* Recycle a bottle card */}
+          <OverlayTrigger
+            placement="top"
+            overlay={recycleBottleTooltip}
+            style={{ backgroundColor: "green" }}
           >
             <Link href={`/recycle`} passHref>
-              <Card.Img
-                variant="top"
-                src={recycleBottleImage.src}
-                alt="Recycle Bottle Image"
-                style={{ transition: "transform 0.3s", height: "390px" }} // Add transition for transform
-                onMouseOver={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.3)")
-                }
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
-              />
-            </Link>
-            <Card.Body
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <Link href={`/recycle`} passHref>
-                <Button
-                  variant="primary"
+              <Card
+                style={{
+                  width: "25rem", // Increase card width
+                  margin: "10px",
+                  textAlign: "center", // Center the content
+                  marginBottom: "150px", // Push the card up a bit
+                  transition: "transform 0.3s", // Add transition for transform
+                  position: "relative", // Ensure proper positioning for tooltip
+                }}
+              >
+                <Card.Img
+                  variant="top"
+                  src={recycleBottleImage.src}
+                  alt="Recycle Bottle Image"
                   style={{
-                    fontSize: "24px",
-                    fontFamily: "light 300",
-                    transition: "transform 0.3s", // Add transition for transform
+                    transition: "transform 0.3s",
+                    height: "300px",
+                    marginLeft: "30px", // Move the picture to the right
+                  }}
+                  onMouseOver={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.3)")
+                  }
+                  onMouseOut={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  }
+                />
+                <Card.Body
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
                   }}
                 >
-                  Recycle a bottle
-                </Button>
-              </Link>
-            </Card.Body>
-          </Card>
-        </Link>
-      </OverlayTrigger>
+                  <Card.Text>Recycle a bottle</Card.Text>
+                  <Link href={`/recycle`} passHref></Link>
+                </Card.Body>
+              </Card>
+            </Link>
+          </OverlayTrigger>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

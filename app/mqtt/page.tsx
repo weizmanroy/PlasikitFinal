@@ -1,41 +1,53 @@
-// src/app/page.tsx
-
-// Mark this component as a Client Component
 "use client";
 
 import React, { useEffect, useState } from "react";
-import mqtt from "mqtt"; // Import the mqtt library
+import mqtt from "mqtt";
 
-const MQTTPage: React.FC = () => {
-  const [messages, setMessages] = useState<string[]>([]);
+interface MQTTPageProps {
+  onMessageReceived: (message: string) => void;
+}
+
+const MQTTPage: React.FC<MQTTPageProps> = ({ onMessageReceived }) => {
+  const [lastMessage, setLastMessage] = useState<string | null>(null);
 
   useEffect(() => {
     // Connect to the MQTT broker
     const client = mqtt.connect("mqtt://broker.emqx.io:8083/mqtt");
 
     // Subscribe to the topic
-    client.subscribe("plastikit/roy/status/#");
+    client.subscribe("plastikit/status");
 
     // Handle incoming messages
-    client.on("message", (topic: any, message: { toString: () => string }) => {
-      // Add the received message to the state
-      setMessages((prevMessages) => [...prevMessages, message.toString()]);
+    client.on("message", (topic, message) => {
+      const newMessage = message.toString();
+      setLastMessage(newMessage);
+
+      // Pass the message to the parent component
+      onMessageReceived(newMessage);
+
+      // Store the last message in local storage
+      localStorage.setItem("lastMessage", newMessage);
     });
+
+    // Retrieve last message from local storage on component mount
+    const storedLastMessage = localStorage.getItem("lastMessage");
+    if (storedLastMessage) {
+      setLastMessage(storedLastMessage);
+      onMessageReceived(storedLastMessage);
+    }
 
     // Clean up when component unmounts
     return () => {
       client.end();
     };
-  }, []);
+  }, [onMessageReceived]);
 
   return (
     <div>
       <h1>MQTT Messages</h1>
-      <ul>
-        {messages.map((msg, index) => (
-          <li key={index}>{msg}</li>
-        ))}
-      </ul>
+      <div>
+        <p>{lastMessage}</p>
+      </div>
     </div>
   );
 };

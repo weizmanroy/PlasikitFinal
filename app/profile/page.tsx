@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { useUser } from "@descope/nextjs-sdk/client";
+import { Card, Button } from "react-bootstrap";
 
 export default function Profile() {
   const [image, setImage] = useState(null);
@@ -12,63 +13,92 @@ export default function Profile() {
     const selectedImage = event.target.files[0];
     setImage(URL.createObjectURL(selectedImage));
   };
+
   const totalGrams =
     (user?.customAttributes?.grams || 0) +
     (user?.customAttributes?.spentGrams || 0);
+
   return (
-    <div className="container">
-      <h1>Profile Page</h1>
-      <div
+    <div
+      className="container"
+      style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}
+    >
+      <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
+        Profile Page
+      </h1>
+
+      <Card
         style={{
-          position: "absolute",
-          top: "50px",
-          right: "25px",
-          border: "1px solid green",
-          padding: "5px",
-          backgroundColor: "#e6f0e8",
+          padding: "20px",
           borderRadius: "10px",
-          color: "green",
-          display: "inline-block",
-          fontFamily:
-            "CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif",
-          textAlign: "center",
-          textDecoration: "none",
-          transition: "all 250ms",
-          fontSize: "20px",
-          userSelect: "none",
-          WebkitUserSelect: "none",
-          touchAction: "manipulation",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
         {user && (
-          <>
-            <div>
+          <div style={{ marginBottom: "20px" }}>
+            <div style={{ textAlign: "center", marginBottom: "10px" }}>
               <strong>Hello "{user.name}"</strong>
             </div>
-            <div>-------------</div>
-            <div>
-              You have: <strong>{user?.customAttributes?.grams || 0}</strong>{" "}
+            <hr />
+            <div style={{ textAlign: "center", marginBottom: "10px" }}>
+              <div>
+                You have: <strong>{user.customAttributes.grams || 0}</strong>{" "}
+                grams
+              </div>
+              <div>
+                Spent: <strong>{user.customAttributes.spentGrams || 0}</strong>{" "}
+                grams
+              </div>
+              <div>
+                Total grams so far: <strong>{totalGrams}</strong> grams
+              </div>
             </div>
-            <div>
-              Spent: <strong>{user?.customAttributes?.spentGrams || 0}</strong>{" "}
-            </div>
-            <div>
-              Total grams so far: <strong>{totalGrams}</strong>{" "}
-            </div>
-          </>
-        )}
-      </div>
-
-      <div className="profile-picture">
-        {image ? (
-          <img src={image} alt="Profile" />
-        ) : (
-          <div className="default-profile">
-            <p>No profile picture uploaded</p>
           </div>
         )}
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-      </div>
+
+        <div
+          className="profile-picture"
+          style={{ textAlign: "center", marginBottom: "20px" }}
+        >
+          {image ? (
+            <img
+              src={image}
+              alt="Profile"
+              style={{ width: "150px", height: "150px", borderRadius: "50%" }}
+            />
+          ) : (
+            <div
+              className="default-profile"
+              style={{
+                padding: "50px",
+                backgroundColor: "#f0f0f0",
+                borderRadius: "50%",
+                width: "150px",
+                height: "150px",
+                display: "inline-block",
+              }}
+            >
+              <p style={{ lineHeight: "150px", margin: 0 }}>
+                No profile picture
+              </p>
+            </div>
+          )}
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ display: "none" }}
+            id="fileInput"
+          />
+          <label htmlFor="fileInput">
+            <Button variant="primary" as="span">
+              Upload Profile Image
+            </Button>
+          </label>
+        </div>
+      </Card>
     </div>
   );
 }

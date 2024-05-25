@@ -1,8 +1,6 @@
 "use client";
-import { log } from "console";
-import data from "../../products.json";
-import { use } from "react";
 import { useSession, useUser } from "@descope/nextjs-sdk/client";
+import data from "../../products.json";
 
 function getProduct(id: any) {
   return data.items.find((p) => p.id === id);
@@ -15,8 +13,13 @@ export default function ProductDetail({ params }: any) {
   const { user } = useUser();
 
   const handleClick = () => {
+    if (!product || !user) {
+      console.error("Product or user not found");
+      return;
+    }
+
     function fetchData() {
-      const apiUrl = `${(window as any)?.location?.origin}/api/submit`;
+      const apiUrl = `${window.location.origin}/api/submit`;
       console.log(apiUrl);
       fetch(apiUrl, {
         method: "POST",
@@ -34,7 +37,7 @@ export default function ProductDetail({ params }: any) {
         })
         .then((data) => {
           // After sending to print, initiate file download
-          downloadFile(data.filePath);
+          downloadFile(product.filePath);
           alert("Done!");
         })
         .catch((error) => {
@@ -50,10 +53,10 @@ export default function ProductDetail({ params }: any) {
       fetch(filePath)
         .then((response) => response.blob())
         .then((blob) => {
-          const url = window.URL.createObjectURL(new Blob([blob]));
+          const url = window.URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
-          a.download = "printed_file.pdf"; // Set desired file name here
+          a.download = filePath.split("/").pop() || "downloaded_file.stl"; // Set desired file name here
           document.body.appendChild(a);
           a.click();
           window.URL.revokeObjectURL(url);
