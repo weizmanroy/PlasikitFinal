@@ -32,7 +32,7 @@ export default function Choose() {
   };
 
   const tooltipStyles = {
-    backgroundColor: "#d7ffb1",
+    backgroundColor: "#f2f5f2",
     color: "black",
     maxWidth: "500px",
     marginTop: "10px",
@@ -78,9 +78,9 @@ export default function Choose() {
             position: "absolute",
             top: "100px",
             left: "10px",
-            border: "1px solid green",
+            border: "0px solid green",
             padding: "5px",
-            backgroundColor: "#c2fbd7",
+            backgroundColor: "#f2f5f2",
             borderRadius: "5px",
           }}
         >

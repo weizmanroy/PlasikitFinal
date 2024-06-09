@@ -2,11 +2,11 @@
 import { useSession, useUser } from "@descope/nextjs-sdk/client";
 import data from "../../products.json";
 
-function getProduct(id: any) {
+function getProduct(id: string) {
   return data.items.find((p) => p.id === id);
 }
 
-export default function ProductDetail({ params }: any) {
+export default function ProductDetail({ params }) {
   const productId = params.productId;
   const product = getProduct(productId);
   const sess = useSession();
@@ -25,7 +25,6 @@ export default function ProductDetail({ params }: any) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Include other headers as necessary
         },
         body: JSON.stringify({ productId, userId: user.userId }),
       })
@@ -33,10 +32,9 @@ export default function ProductDetail({ params }: any) {
           if (!response.ok) {
             throw new Error("Network response was not ok");
           }
-          return response.json(); // Parses the JSON returned from the server
+          return response.json();
         })
         .then((data) => {
-          // After sending to print, initiate file download
           downloadFile(product.filePath);
           alert("Done!");
         })
@@ -48,15 +46,14 @@ export default function ProductDetail({ params }: any) {
         });
     }
 
-    // Function to initiate file download
-    function downloadFile(filePath: string) {
+    function downloadFile(filePath: string | URL | Request) {
       fetch(filePath)
         .then((response) => response.blob())
         .then((blob) => {
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
-          a.download = filePath.split("/").pop() || "downloaded_file.stl"; // Set desired file name here
+          a.download = filePath.split("/").pop() || "downloaded_file.stl";
           document.body.appendChild(a);
           a.click();
           window.URL.revokeObjectURL(url);
@@ -66,7 +63,6 @@ export default function ProductDetail({ params }: any) {
         });
     }
 
-    // Call the function to execute the API request
     fetchData();
   };
 
@@ -79,7 +75,15 @@ export default function ProductDetail({ params }: any) {
   }
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
+    <div
+      style={{
+        textAlign: "center",
+        padding: "130px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <button
         onClick={() => (window.location.href = "/")}
         type="button"
@@ -101,30 +105,83 @@ export default function ProductDetail({ params }: any) {
         </svg>
         <span>Go back</span>
       </button>
-      <h1>Product ID: {productId}</h1>
-      <h2>Name: {product.name}</h2>
-      <p>Description: {product.description}</p>
-      <p>Grams: {product.grams}</p>
       <img
         src={product.imageURL}
         alt={product.name}
-        style={{ maxWidth: "100%" }}
+        style={{ maxWidth: "40%", marginRight: "20px" }} // Decreased the size of the picture and adjusted margin
       />
-      <button
-        onClick={handleClick}
+      <div
         style={{
-          border: "2px solid green",
-          backgroundColor: "lightgreen",
-          padding: "10px 20px",
-          borderRadius: "5px",
-          fontSize: "16px",
-          fontWeight: "bold",
-          color: "white",
-          cursor: "pointer",
+          flex: "1",
+          textAlign: "left",
+          padding: "40px",
+          backgroundColor: "#f9f9f9",
+          borderRadius: "10px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
-        Send to print
-      </button>
+        <h1
+          style={{
+            fontSize: "20px",
+            marginBottom: "15px",
+            color: "#333",
+          }}
+        >
+          Product ID: {productId}
+        </h1>
+        <h2
+          style={{
+            fontSize: "24px",
+            margin: "10px 0",
+            fontWeight: "bold",
+            color: "#555",
+          }}
+        >
+          Name: {product.name}
+        </h2>
+        <p
+          style={{
+            fontSize: "16px",
+            margin: "10px 0",
+            color: "#666",
+          }}
+        >
+          Description: {product.description}
+        </p>
+        <p
+          style={{
+            fontSize: "16px",
+            margin: "10px 0",
+            color: "#666",
+          }}
+        >
+          Grams: {product.grams}
+        </p>
+        <button
+          onClick={handleClick}
+          style={{
+            border: "2px solid darkgreen",
+            backgroundColor: "green",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            fontSize: "16px",
+            fontWeight: "bold",
+            color: "white",
+            cursor: "pointer",
+            transition: "background-color 0.3s, transform 0.3s",
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.backgroundColor = "darkgreen";
+            e.currentTarget.style.transform = "scale(1.05)";
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.backgroundColor = "green";
+            e.currentTarget.style.transform = "scale(1)";
+          }}
+        >
+          Download 3D model
+        </button>
+      </div>
     </div>
   );
 }

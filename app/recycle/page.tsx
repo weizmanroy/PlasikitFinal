@@ -117,7 +117,7 @@ export default function Choose({ mqttMessages }: ChooseProps) {
       setWeightMessage(message);
 
       const grams = parseInt(message.replace("g", ""));
-      const userId = user?.loginIds[0]; // Use user.loginIds[0] to get the user ID
+      const userId = user?.userId;
 
       if (userId) {
         // Send the grams to the backend
@@ -164,7 +164,7 @@ export default function Choose({ mqttMessages }: ChooseProps) {
         <span>Back</span>
       </button>
       <div>
-        <MQTTPage onMessageReceived={handleMessageReceived} />
+        <MQTTPage onMessageReceived={handleMessageReceived} userId={""} />
       </div>
 
       <Timeline position="alternate" style={{ marginTop: "550px" }}>
