@@ -13,17 +13,17 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useRouter } from "next/navigation";
 import { useDescope, useSession } from "@descope/nextjs-sdk/client";
 import Image from "next/image";
-import logoImage from "/pictures/1663102072_84766_gif-url.gif";
+import logoImage from "../../pictures/logo.png";
 
 const pages = [
   { name: "Main", link: "/choose" },
   { name: "3D models", link: "/" },
   { name: "Recycle", link: "/recycle" },
   { name: "About", link: "/about" },
+  { name: "Groups", link: "/groups" },
 ];
 const settings = ["Profile", "Logout"];
 
@@ -76,26 +76,10 @@ function ResponsiveAppBar() {
               <Image
                 src={logoImage}
                 alt="Plastikit Logo"
-                width={40}
-                height={40}
+                width={130} // increased width
+                height={130} // increased height
                 style={{ marginRight: "10px" }}
               />
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{
-                  mr: 2,
-                  display: { xs: "none", md: "flex" },
-                  fontFamily: "Roboto, sans-serif",
-                  fontWeight: 700,
-                  letterSpacing: ".3rem",
-                  color: "inherit",
-                  textDecoration: "none",
-                }}
-              >
-                Plastikit
-              </Typography>
             </Box>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -136,24 +120,16 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Link href="/choose" passHref>
-            <Typography
-              variant="h5"
-              noWrap
-              component="div"
-              sx={{
-                flexGrow: 1,
-                display: { xs: "flex", md: "none" },
-                fontFamily: "Roboto, sans-serif",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              Plastikit
-            </Typography>
+            <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
+              <Image
+                src={logoImage}
+                alt="Plastikit Logo"
+                width={60} // increased width
+                height={60} // increased height
+                style={{ marginRight: "10px" }}
+              />
+            </Box>
           </Link>
           <Box
             sx={{

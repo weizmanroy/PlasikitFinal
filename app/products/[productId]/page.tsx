@@ -1,6 +1,7 @@
 "use client";
 import { useSession, useUser } from "@descope/nextjs-sdk/client";
 import data from "../../products.json";
+import { useState } from "react";
 
 function getProduct(id: string) {
   return data.items.find((p) => p.id === id);
@@ -11,12 +12,23 @@ export default function ProductDetail({ params }) {
   const product = getProduct(productId);
   const sess = useSession();
   const { user } = useUser();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleClick = () => {
     if (!product || !user) {
       console.error("Product or user not found");
       return;
     }
+
+    if (user.grams < product.grams) {
+      const message =
+        "You do not have enough grams to download this model. Please collect more bottles to earn grams.";
+      setErrorMessage(message);
+      alert(message); // Added detailed alert message
+      return;
+    }
+
+    setErrorMessage(""); // Clear any previous error messages
 
     function fetchData() {
       const apiUrl = `${window.location.origin}/api/submit`;
@@ -157,6 +169,17 @@ export default function ProductDetail({ params }) {
         >
           Grams: {product.grams}
         </p>
+        {errorMessage && (
+          <p
+            style={{
+              color: "red",
+              fontWeight: "bold",
+              marginTop: "10px",
+            }}
+          >
+            {errorMessage}
+          </p>
+        )}
         <button
           onClick={handleClick}
           style={{

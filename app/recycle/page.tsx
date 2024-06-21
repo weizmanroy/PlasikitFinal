@@ -100,7 +100,7 @@ export default function Choose({ mqttMessages }: ChooseProps) {
     if (!isAuthenticated && !isSessionLoading) {
       router.push("/sign-in");
     }
-  }, [isSessionLoading, isAuthenticated]);
+  }, [isSessionLoading, isAuthenticated, router]);
 
   if (isSessionLoading) {
     return <div>Loading</div>;
@@ -138,36 +138,41 @@ export default function Choose({ mqttMessages }: ChooseProps) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         height: "100vh",
       }}
     >
-      <button
-        onClick={() => (window.location.href = "/choose")}
-        type="button"
-        className="fixed top-20 left-5 flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
-      >
-        <svg
-          className="w-5 h-5 rtl:rotate-180"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-          />
-        </svg>
-        <span>Back</span>
-      </button>
       <div>
-        <MQTTPage onMessageReceived={handleMessageReceived} userId={""} />
+        <button
+          onClick={() => (window.location.href = "/choose")}
+          type="button"
+          className="fixed top-32 left-5 flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
+        >
+          <svg
+            className="w-5 h-5 rtl:rotate-180"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+            />
+          </svg>
+          <span>Back</span>
+        </button>
+        <div>
+          <MQTTPage onMessageReceived={handleMessageReceived} userId={""} />
+        </div>
       </div>
 
-      <Timeline position="alternate" style={{ marginTop: "550px" }}>
+      <Timeline
+        position="alternate"
+        style={{ marginTop: "20px", width: "80%" }}
+      >
         <TimelineItem>
           <TimelineSeparator>
             <TimelineConnector />
@@ -181,11 +186,15 @@ export default function Choose({ mqttMessages }: ChooseProps) {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
+            <Typography
+              variant="h6"
+              component="span"
+              style={{ whiteSpace: "nowrap", width: "100%" }}
+            >
               Start Procedure
             </Typography>
-            <Typography>
-              Press the start button to begin the procedure.
+            <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
+              Press the start button to begin the procedure
             </Typography>
           </TimelineContent>
         </TimelineItem>
@@ -202,10 +211,16 @@ export default function Choose({ mqttMessages }: ChooseProps) {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Cut Bottle's Head
+            <Typography
+              variant="h6"
+              component="span"
+              style={{ whiteSpace: "nowrap", width: "100%" }}
+            >
+              Cut Bottle&apos;s Head
             </Typography>
-            <Typography>Remove the head of the bottle.</Typography>
+            <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
+              Remove the head of the bottle.
+            </Typography>
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
@@ -221,10 +236,13 @@ export default function Choose({ mqttMessages }: ChooseProps) {
             <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Connect the Bottle
+            <Typography
+              variant="h6"
+              component="span"
+              style={{ whiteSpace: "nowrap", width: "100%" }}
+            >
+              Connect the bottle to the machine
             </Typography>
-            <Typography>Connect the bottle to the machine.</Typography>
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
@@ -240,12 +258,12 @@ export default function Choose({ mqttMessages }: ChooseProps) {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
+            <Typography
+              variant="h6"
+              component="span"
+              style={{ whiteSpace: "nowrap", width: "100%" }}
+            >
               Ensure Temperature is 240 Degrees
-            </Typography>
-            <Typography>
-              Check the machine's temperature and ensure it is set to 240
-              degrees.
             </Typography>
           </TimelineContent>
         </TimelineItem>
@@ -258,10 +276,13 @@ export default function Choose({ mqttMessages }: ChooseProps) {
             <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
+            <Typography
+              variant="h6"
+              component="span"
+              style={{ whiteSpace: "nowrap", width: "100%" }}
+            >
               Start Engine
             </Typography>
-            <Typography>Press the button to start the engine.</Typography>
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
@@ -277,10 +298,14 @@ export default function Choose({ mqttMessages }: ChooseProps) {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
+            <Typography
+              variant="h6"
+              component="span"
+              style={{ whiteSpace: "nowrap", width: "100%" }}
+            >
               Weigh Your Coil
             </Typography>
-            <Typography>
+            <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
               {weightMessage
                 ? `Congrats! ${weightMessage} was added to your account.`
                 : "No weight message received."}

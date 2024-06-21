@@ -22,7 +22,6 @@ export default function RootLayout({
     <AuthProvider projectId="P2fBgx8H3bG5LZPtQo20GYUBd7am">
       <html lang="en">
         <body className={inter.className}>
-          {/* <TopNav /> */}
           <TopHead />
           {children}
         </body>

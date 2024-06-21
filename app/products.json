@@ -18,11 +18,11 @@
         },
         {
             "id": "3",
-            "name": "Stitch",
-            "description": "A graceful giraffe grazing on tall trees.",
-            "grams": 200,
-            "imageURL": "https://blenderartists.org/uploads/default/optimized/4X/f/f/d/ffd88399c9e58e63710c128816b62bf876b068e3_2_750x750.jpg",
-            "filePath": "../STLfiles/Stitch.gcode.gz"
+            "name": "Heart",
+            "description": "A Voronoi heart",
+            "grams": 650,
+            "imageURL": "https://pic2-cdn.creality.com/comp/model/av/f124266328215a4c5d65da655925f46a.avif",
+            "filePath": "../STLfiles.VoronoiHeart.gz"
         },
         {
             "id": "4",
@@ -31,6 +31,46 @@
             "grams": 180,
             "imageURL": "https://pic2-cdn.creality.com/comp/model/av/00368f7c813c684fd1a832a35b85389b.avif",
             "filePath": "../STLfiles/Lazy_Cat_v4.gcode.gz"
+        },
+        {
+            "id": "5",
+            "name": "Stitch",
+            "description": "A graceful giraffe grazing on tall trees.",
+            "grams": 200,
+            "imageURL": "https://blenderartists.org/uploads/default/optimized/4X/f/f/d/ffd88399c9e58e63710c128816b62bf876b068e3_2_750x750.jpg",
+            "filePath": "../STLfiles/Stitch.gcode.gz"
+        },
+        {
+            "id": "6",
+            "name": "Stretchy Fidget ",
+            "description": "Triangle, circle, and squera Stretchy Fidget",
+            "grams": 450,
+            "imageURL": "https://pic2-cdn.creality.com/comp/model/av/c881674741350efb25125ac06d14b603.avif",
+            "filePath": "../STLfiles.Stretch.gz"
+        },
+        {
+            "id": "7",
+            "name": "Desk storage",
+            "description": "Under Desk Storage Drawer Set - Two Drawer",
+            "grams": 1050,
+            "imageURL": "https://pic2-cdn.creality.com/comp/model/av/95585835c27b4376dd4e12cf223d8938.avif",
+            "filePath": "../STLfiles.Frame.gz"
+        },
+        {
+            "id": "8",
+            "name": "Unicorn",
+            "description": "A unicorn model",
+            "grams": 400,
+            "imageURL": "https://pic2-cdn.creality.com/model/13921A90CB92DC41B17699DC6845F2844.png?x-oss-process=image/resize,w_700/format,webp",
+            "filePath": "../STLfiles.Unicorn.gz"
+        },
+        {
+            "id": "9",
+            "name": "Spinner ",
+            "description": "100mm spinner (spinning top)",
+            "grams": 150,
+            "imageURL": "https://pic2-cdn.creality.com/comp/model/av/95469b7a4787e7a5e1f2273b1a35e1a1.avif",
+            "filePath": "../STLfiles.spinner.gz"
         }
     ]
 }
