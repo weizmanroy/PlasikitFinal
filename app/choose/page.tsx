@@ -4,7 +4,6 @@ import { Descope } from "@descope/nextjs-sdk";
 import Link from "next/link";
 import { Card, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import { useDescope, useSession, useUser } from "@descope/nextjs-sdk/client";
-
 import printModelImage from "../../pictures/pngtree-3d-printer-manufacturing-isolated-on-white-background-png-image_4821024.png";
 import recycleBottleImage from "../../pictures/watercolor-illustration-of-a-green-recycle-sign-and-a-plastic-bottle-reuse-symbol-for-ecological-design-wasteless-lifestyle-isolated-drawn-by-hand-png.png";
 import { useEffect } from "react";
@@ -20,7 +19,7 @@ export default function Choose() {
     if (!isAuthenticated && !isSessionLoading) {
       router.push("/sign-in");
     }
-  }, [isSessionLoading, isAuthenticated]);
+  }, [isSessionLoading, isAuthenticated, router]); // הוספת 'router' למערך התלות
 
   if (isSessionLoading) {
     return <div>Loading</div>;

@@ -2,6 +2,7 @@
 import { useSession, useUser } from "@descope/nextjs-sdk/client";
 import data from "../../products.json";
 import { useState } from "react";
+import Image from "next/image"; // הוסף את הייבוא של Image מ-next/image
 
 function getProduct(id: string) {
   return data.items.find((p) => p.id === id);
@@ -117,9 +118,11 @@ export default function ProductDetail({ params }) {
         </svg>
         <span>Go back</span>
       </button>
-      <img
+      <Image
         src={product.imageURL}
         alt={product.name}
+        width={500}
+        height={500}
         style={{ maxWidth: "40%", marginRight: "20px" }} // Decreased the size of the picture and adjusted margin
       />
       <div

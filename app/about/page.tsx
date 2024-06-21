@@ -64,7 +64,7 @@ export default function About() {
             collaboration with schools in Ramat Gan.
           </Typography>
           <Typography paragraph>
-            The project's goal is to promote environmental awareness and
+            The project&apos;s goal is to promote environmental awareness and
             encourage active participation of students in recycling, while
             creating high-quality and sustainable products from recycled
             plastic. The system includes two main components:
