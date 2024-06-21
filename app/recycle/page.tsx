@@ -87,7 +87,7 @@ interface ChooseProps {
   mqttMessages: string[]; // Define the type of mqttMessages prop
 }
 
-export default function Choose({ mqttMessages }: ChooseProps) {
+export default function Recycle({ mqttMessages }: ChooseProps) {
   const { isAuthenticated, isSessionLoading } = useSession();
   const router = useRouter();
   const { user } = useUser();

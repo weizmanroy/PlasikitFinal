@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from "react";
 import mqtt from "mqtt";
 
-interface MQTTPageProps {
+interface PageProps {
   onMessageReceived: (message: string) => void;
 }
 
-const MQTTPage: React.FC<MQTTPageProps> = ({ onMessageReceived }) => {
+const MQTTPage: React.FC<PageProps> = ({ onMessageReceived }) => {
   const [lastMessage, setLastMessage] = useState<string | null>(null);
 
   useEffect(() => {

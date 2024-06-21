@@ -1,6 +1,5 @@
 // next.config.js
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     domains: [
@@ -15,6 +14,13 @@ const nextConfig = {
       "pic2-cdn.creality.com",
     ],
   },
+  reactStrictMode: true,
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
