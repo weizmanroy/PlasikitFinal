@@ -12,10 +12,14 @@ const MQTTPage: React.FC<PageProps> = ({ onMessageReceived }) => {
 
   useEffect(() => {
     // Connect to the MQTT broker
-    const client = mqtt.connect("mqtt://broker.emqx.io:8083/mqtt");
+    const client = mqtt.connect("ws://broker.emqx.io:8083/mqtt");
 
     // Subscribe to the topic
-    client.subscribe("plastikit/status");
+    client.subscribe("plastikit/status", (err) => {
+      if (err) {
+        console.error("Subscription error:", err);
+      }
+    });
 
     // Handle incoming messages
     client.on("message", (topic, message) => {

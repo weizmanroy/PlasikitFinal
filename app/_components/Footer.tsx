@@ -5,13 +5,20 @@ import {
   FaLinkedin,
   FaTwitterSquare,
 } from "react-icons/fa";
+import Image from "next/image";
+import logoImage from "../../pictures/logo.png";
 
 const Footer = () => {
   return (
     <footer className="w-full px-4 py-8 bg-[#d9e3d7]">
       <div className="max-w-[1520px] mx-auto grid lg:grid-cols-3 gap-8 text-gray-700">
         <div>
-          <h1 className="text-3xl font-bold text-green-500">Plastikit</h1>
+          <Image
+            src={logoImage}
+            alt="Plastikit Logo"
+            width={130}
+            height={130}
+          />
           <p className="mt-4">
             Plastikit is committed to providing innovative recycling solutions
             to make the world a cleaner place.

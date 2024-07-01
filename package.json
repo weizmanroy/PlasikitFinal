@@ -22,7 +22,7 @@
     "bootstrap": "^5.3.3",
     "formidable": "^3.5.1",
     "mdb-react-ui-kit": "^7.2.0",
-    "mqtt": "^5.5.5",
+    "mqtt": "^5.7.3",
     "next": "^14.2.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",

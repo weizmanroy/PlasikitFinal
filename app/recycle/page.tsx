@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -9,17 +8,19 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import KitchenIcon from "@mui/icons-material/Kitchen";
-import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputComponent";
+import LinearScaleIcon from "@mui/icons-material/LinearScale";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import BuildIcon from "@mui/icons-material/Build";
 import BalanceIcon from "@mui/icons-material/Balance";
 import Typography from "@mui/material/Typography";
-import MQTTPage from "../mqtt/page";
 import { keyframes } from "@emotion/react";
 import { styled } from "@mui/system";
 import { useDescope, useSession, useUser } from "@descope/nextjs-sdk/client";
+import mqtt from "mqtt"; // Import the MQTT library
+import Image from "next/image";
+import gifImage from "../../pictures/6ob.gif"; // Import the GIF
 import Footer from "../_components/Footer";
+import MQTTPage from "../mqtt/page";
 
 const iconSize = "40px";
 
@@ -29,17 +30,26 @@ const blink = keyframes`
   100% { opacity: 1; }
 `;
 
+const flyToUser = keyframes`
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 100px); 
+  }
+`;
+
 const BlinkingPlayArrowIcon = styled(PlayArrowIcon)`
   animation: ${blink} 1s infinite;
   font-size: ${iconSize};
+  cursor: pointer;
+  transition: transform 0.2s;
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
-const BlinkingKitchenIcon = styled(KitchenIcon)`
-  animation: ${blink} 1s infinite;
-  font-size: ${iconSize};
-`;
-
-const BlinkingSettingsInputComponentIcon = styled(SettingsInputComponentIcon)`
+const BlinkingLinearScaleIcon = styled(LinearScaleIcon)`
   animation: ${blink} 1s infinite;
   font-size: ${iconSize};
 `;
@@ -61,13 +71,14 @@ const BlinkingBalanceIcon = styled(BalanceIcon)`
 
 const LargePlayArrowIcon = styled(PlayArrowIcon)`
   font-size: ${iconSize};
+  cursor: pointer;
+  transition: transform 0.2s;
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
-const LargeKitchenIcon = styled(KitchenIcon)`
-  font-size: ${iconSize};
-`;
-
-const LargeSettingsInputComponentIcon = styled(SettingsInputComponentIcon)`
+const LargeLinearScaleIcon = styled(LinearScaleIcon)`
   font-size: ${iconSize};
 `;
 
@@ -83,8 +94,20 @@ const LargeBalanceIcon = styled(BalanceIcon)`
   font-size: ${iconSize};
 `;
 
+const RedBackgroundThermostatIcon = styled(ThermostatIcon)`
+  font-size: ${iconSize};
+  background-color: red;
+  border-radius: 50%;
+  padding: 5px;
+`;
+
+const FlyingGrams = styled("div")`
+  position: absolute;
+  animation: ${flyToUser} 2s forwards;
+`;
+
 interface ChooseProps {
-  mqttMessages: string[]; // Define the type of mqttMessages prop
+  mqttMessages: string[];
 }
 
 export default function Recycle({ mqttMessages }: ChooseProps) {
@@ -95,12 +118,45 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
 
   const [lastMessage, setLastMessage] = useState<string | null>(null);
   const [weightMessage, setWeightMessage] = useState<string | null>(null);
+  const [temperature, setTemperature] = useState<number | null>(null);
+  const [engineStarted, setEngineStarted] = useState<boolean>(false);
+  const [showGif, setShowGif] = useState<boolean>(false);
+  const [isTempBlinking, setIsTempBlinking] = useState<boolean>(false);
+  const [isScaling, setIsScaling] = useState<boolean>(false);
+  const [isStartConfirmationReceived, setIsStartConfirmationReceived] =
+    useState<boolean>(false);
+  const [flyingGrams, setFlyingGrams] = useState<number | null>(null);
+  const [totalGrams, setTotalGrams] = useState<number>(
+    user?.customAttributes?.grams || 0
+  );
+
+  const [isEngineStartingFlag, setIsEngineStartingFlag] =
+    useState<boolean>(false);
+
+  const gramsPositionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isAuthenticated && !isSessionLoading) {
       router.push("/sign-in");
     }
   }, [isSessionLoading, isAuthenticated, router]);
+
+  useEffect(() => {
+    if (showGif) {
+      const timer = setTimeout(() => setShowGif(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showGif]);
+
+  useEffect(() => {
+    if (flyingGrams !== null) {
+      const timer = setTimeout(() => {
+        setTotalGrams((prevGrams) => prevGrams + flyingGrams);
+        setFlyingGrams(null);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [flyingGrams]);
 
   if (isSessionLoading) {
     return <div>Loading</div>;
@@ -112,15 +168,41 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
   };
 
   const handleMessageReceived = (message: string) => {
+    console.log("Message received:", message);
     setLastMessage(message);
-    if (message.endsWith("g")) {
-      setWeightMessage(message);
 
-      const grams = parseInt(message.replace("g", ""));
+    if (message.startsWith("temp:")) {
+      const temp = parseInt(message.split(":")[1], 10);
+      setTemperature(temp);
+      setIsScaling(false);
+      setIsStartConfirmationReceived(false);
+      if (!isEngineStartingFlag) {
+        setIsTempBlinking(true);
+      }
+    } else if (message === "Start_confirmation_recieved") {
+      setIsStartConfirmationReceived(true);
+      setIsTempBlinking(false);
+      setEngineStarted(false);
+      setIsScaling(false);
+    } else if (message === "engine_starting") {
+      setEngineStarted(true);
+      setIsTempBlinking(false);
+      setIsScaling(false);
+      setIsEngineStartingFlag(true);
+    } else if (message === "scaling") {
+      setIsScaling(true);
+      setIsTempBlinking(false);
+      setEngineStarted(false);
+      setWeightMessage(null);
+      setIsStartConfirmationReceived(false);
+    } else if (message.endsWith("gr")) {
+      setWeightMessage(message);
+      setShowGif(true);
+
+      const grams = parseInt(message.replace("gr", ""));
       const userId = user?.userId;
 
       if (userId) {
-        // Send the grams to the backend
         fetch("/api/update-grams", {
           method: "POST",
           headers: {
@@ -129,7 +211,52 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
           body: JSON.stringify({ grams, userId }),
         });
       }
+
+      setFlyingGrams(grams);
+    } else {
+      console.warn("Unhandled message type:", message);
     }
+  };
+
+  const handlePlayClick = () => {
+    setLastMessage(null);
+    setWeightMessage(null);
+    setTemperature(null);
+    setEngineStarted(false);
+    setIsTempBlinking(false);
+    setShowGif(false);
+    setIsScaling(false);
+    setIsStartConfirmationReceived(false);
+    setIsEngineStartingFlag(false);
+
+    const client = mqtt.connect("ws://broker.emqx.io:8083/mqtt");
+
+    client.on("connect", () => {
+      client.publish("plastikit/status", ".", (err) => {
+        if (err) {
+          console.error("Publish error:", err);
+        } else {
+          console.log("Message published: .");
+        }
+      });
+
+      client.publish("plastikit/status", "Start_confirmation", (err) => {
+        if (err) {
+          console.error("Publish error:", err);
+        } else {
+          console.log("Message published: Start_confirmation");
+        }
+      });
+
+      client.end();
+    });
+  };
+
+  const getTemperatureColor = (temp: number) => {
+    if (temp >= 240) return "red";
+    if (temp >= 200) return "orange";
+    if (temp >= 150) return "yellow";
+    return "green";
   };
 
   return (
@@ -140,8 +267,35 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
         alignItems: "center",
         justifyContent: "flex-start",
         height: "100vh",
+        position: "relative",
       }}
     >
+      {showGif && (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 1000,
+            pointerEvents: "none",
+          }}
+        >
+          <Image src={gifImage} alt="Fireworks" width={500} height={300} />
+        </div>
+      )}
+      {flyingGrams !== null && (
+        <FlyingGrams
+          style={{
+            top: gramsPositionRef.current?.getBoundingClientRect().top,
+            left: gramsPositionRef.current?.getBoundingClientRect().left,
+          }}
+        >
+          <Typography variant="h6" component="div">
+            +{flyingGrams} gr
+          </Typography>
+        </FlyingGrams>
+      )}
       <div>
         <button
           onClick={() => (window.location.href = "/choose")}
@@ -165,7 +319,7 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
           <span>Back</span>
         </button>
         <div>
-          <MQTTPage onMessageReceived={handleMessageReceived} userId={""} />
+          <MQTTPage onMessageReceived={handleMessageReceived} />
         </div>
       </div>
 
@@ -177,8 +331,12 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
           <TimelineSeparator>
             <TimelineConnector />
             <TimelineDot color="primary">
-              {lastMessage === "1" ? (
-                <BlinkingPlayArrowIcon />
+              {!isStartConfirmationReceived &&
+              !isTempBlinking &&
+              !engineStarted &&
+              !isScaling &&
+              !weightMessage ? (
+                <BlinkingPlayArrowIcon onClick={handlePlayClick} />
               ) : (
                 <LargePlayArrowIcon />
               )}
@@ -202,10 +360,14 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
           <TimelineSeparator>
             <TimelineConnector />
             <TimelineDot color="secondary">
-              {lastMessage === "2" ? (
-                <BlinkingKitchenIcon />
+              {isStartConfirmationReceived &&
+              !isTempBlinking &&
+              !engineStarted &&
+              !isScaling &&
+              !weightMessage ? (
+                <BlinkingLinearScaleIcon />
               ) : (
-                <LargeKitchenIcon />
+                <LargeLinearScaleIcon />
               )}
             </TimelineDot>
             <TimelineConnector />
@@ -216,63 +378,28 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
               component="span"
               style={{ whiteSpace: "nowrap", width: "100%" }}
             >
-              Cut Bottle&apos;s Head
-            </Typography>
-            <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
-              Remove the head of the bottle.
+              Place the Filament and Press the Blue Button to Start
             </Typography>
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
             <TimelineConnector />
-            <TimelineDot color="primary" variant="outlined">
-              {lastMessage === "3" ? (
-                <BlinkingSettingsInputComponentIcon />
-              ) : (
-                <LargeSettingsInputComponentIcon />
-              )}
-            </TimelineDot>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography
-              variant="h6"
-              component="span"
-              style={{ whiteSpace: "nowrap", width: "100%" }}
+            <TimelineDot
+              style={{
+                backgroundColor:
+                  temperature && temperature > 100 ? "red" : undefined,
+              }}
             >
-              Connect the bottle to the machine
-            </Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-            <TimelineDot color="secondary">
-              {lastMessage === "4" ? (
+              {isTempBlinking &&
+              !engineStarted &&
+              !isScaling &&
+              !weightMessage ? (
                 <BlinkingThermostatIcon />
               ) : (
                 <LargeThermostatIcon />
               )}
             </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography
-              variant="h6"
-              component="span"
-              style={{ whiteSpace: "nowrap", width: "100%" }}
-            >
-              Ensure Temperature is 240 Degrees
-            </Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary">
-              {lastMessage === "5" ? <BlinkingBuildIcon /> : <LargeBuildIcon />}
-            </TimelineDot>
             <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
@@ -281,15 +408,67 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
               component="span"
               style={{ whiteSpace: "nowrap", width: "100%" }}
             >
-              Start Engine
+              Heating Up, The temperature is:
             </Typography>
+            <Typography
+              style={{
+                whiteSpace: "nowrap",
+                width: "100%",
+                color: temperature
+                  ? getTemperatureColor(temperature)
+                  : "inherit",
+              }}
+            >
+              {temperature ? `${temperature} °C` : "Waiting for temperature..."}
+            </Typography>
+            <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
+              When the temperature is reached, the engine will start
+            </Typography>
+          </TimelineContent>
+        </TimelineItem>
+        <TimelineItem>
+          <TimelineSeparator>
+            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
+            <TimelineDot color="primary">
+              {engineStarted && !isScaling && !weightMessage ? (
+                <BlinkingBuildIcon />
+              ) : (
+                <LargeBuildIcon />
+              )}
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent sx={{ py: "12px", px: 2 }}>
+            {engineStarted ? (
+              <>
+                <Typography
+                  variant="h6"
+                  component="span"
+                  style={{ whiteSpace: "nowrap", width: "100%" }}
+                >
+                  The engine has been started
+                </Typography>
+                <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
+                  It is transforming into a filament, long press the blue button
+                  to stop
+                </Typography>
+              </>
+            ) : (
+              <Typography
+                variant="h6"
+                component="span"
+                style={{ whiteSpace: "nowrap", width: "100%" }}
+              >
+                Start Engine
+              </Typography>
+            )}
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
             <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
             <TimelineDot color="secondary">
-              {lastMessage === "6" ? (
+              {isScaling || lastMessage?.endsWith("gr") ? (
                 <BlinkingBalanceIcon />
               ) : (
                 <LargeBalanceIcon />
@@ -303,26 +482,20 @@ export default function Recycle({ mqttMessages }: ChooseProps) {
               component="span"
               style={{ whiteSpace: "nowrap", width: "100%" }}
             >
-              Weigh Your Coil
+              Weigh Your Filament
             </Typography>
             <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
-              {weightMessage
+              {isScaling
+                ? "Press the yellow button to weigh"
+                : weightMessage
                 ? `Congrats! ${weightMessage} was added to your account.`
                 : "No weight message received."}
             </Typography>
           </TimelineContent>
         </TimelineItem>
       </Timeline>
-
-      <iframe
-        className="w-full aspect-video self-stretch md:min-h-96"
-        src="https://www.youtube.com/embed/1FLYZdxsteo"
-        frameBorder="0"
-        title="Product Overview Video"
-        aria-hidden="true"
-      />
-      <div>
-        You have: <strong>{user?.customAttributes?.grams || 0}</strong>{" "}
+      <div ref={gramsPositionRef} style={{ marginTop: "50px" }}>
+        You have: <strong>{totalGrams}</strong> grams
       </div>
       <Footer />
     </div>
