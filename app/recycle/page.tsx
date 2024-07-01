@@ -20,7 +20,7 @@ import mqtt from "mqtt"; // Import the MQTT library
 import Image from "next/image";
 import gifImage from "../../pictures/6ob.gif"; // Import the GIF
 import Footer from "../_components/Footer";
-import MQTTPage from "../mqtt/page";
+import MQTTPage from "../_components/mqtt";
 
 const iconSize = "40px";
 
@@ -106,11 +106,11 @@ const FlyingGrams = styled("div")`
   animation: ${flyToUser} 2s forwards;
 `;
 
-interface ChooseProps {
-  mqttMessages: string[];
-}
+// interface ChooseProps {
+//   mqttMessages: string[];
+// }
 
-export default function Recycle({ mqttMessages }: ChooseProps) {
+export default function Recycle() {
   const { isAuthenticated, isSessionLoading } = useSession();
   const router = useRouter();
   const { user } = useUser();

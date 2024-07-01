@@ -1,10 +1,11 @@
+// @ts-ignore
 "use client";
 
 import React, { useEffect, useState } from "react";
 import mqtt from "mqtt";
 
 interface PageProps {
-  onMessageReceived: (message: string) => void;
+  onMessageReceived: (message: any) => void;
 }
 
 const MQTTPage: React.FC<PageProps> = ({ onMessageReceived }) => {
@@ -44,7 +45,7 @@ const MQTTPage: React.FC<PageProps> = ({ onMessageReceived }) => {
     return () => {
       client.end();
     };
-  }, [onMessageReceived]);
+  });
 
   return (
     <div>
