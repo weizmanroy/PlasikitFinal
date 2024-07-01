@@ -35,7 +35,7 @@ const flyToUser = keyframes`
     transform: translate(0, 0);
   }
   100% {
-    transform: translate(0, 100px); 
+    transform: translate(0, -100px); 
   }
 `;
 
@@ -106,9 +106,33 @@ const FlyingGrams = styled("div")`
   animation: ${flyToUser} 2s forwards;
 `;
 
-// interface ChooseProps {
-//   mqttMessages: string[];
-// }
+const StyledTimelineContent = styled(TimelineContent)`
+  & .MuiTypography-root {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    color: #333;
+  }
+  & .MuiTypography-h6 {
+    font-size: 1.25rem;
+    color: #1976d2;
+    margin-bottom: 8px;
+  }
+  & .MuiTypography-body1 {
+    font-size: 1rem;
+    color: #555;
+  }
+`;
+
+const StyledTotalGrams = styled("div")`
+  margin-top: 50px;
+  padding: 20px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+`;
 
 export default function Recycle() {
   const { isAuthenticated, isSessionLoading } = useSession();
@@ -134,6 +158,7 @@ export default function Recycle() {
     useState<boolean>(false);
 
   const gramsPositionRef = useRef<HTMLDivElement>(null);
+  const clientRef = useRef<mqtt.MqttClient | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated && !isSessionLoading) {
@@ -158,9 +183,37 @@ export default function Recycle() {
     }
   }, [flyingGrams]);
 
-  if (isSessionLoading) {
-    return <div>Loading</div>;
-  }
+  useEffect(() => {
+    if (weightMessage && showGif) {
+      const timer = setTimeout(() => {
+        router.push("/choose");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [weightMessage, showGif, router]);
+
+  useEffect(() => {
+    const client = mqtt.connect("ws://broker.emqx.io:8083/mqtt");
+
+    client.on("connect", () => {
+      console.log("Connected to MQTT broker");
+      client.subscribe("plastikit/status", (err) => {
+        if (err) {
+          console.error("Subscription error:", err);
+        }
+      });
+    });
+
+    client.on("message", (topic, message) => {
+      handleMessageReceived(message.toString());
+    });
+
+    clientRef.current = client;
+
+    return () => {
+      client.end();
+    };
+  }, []);
 
   const handleLogout = () => {
     sdk.logout();
@@ -229,9 +282,8 @@ export default function Recycle() {
     setIsStartConfirmationReceived(false);
     setIsEngineStartingFlag(false);
 
-    const client = mqtt.connect("ws://broker.emqx.io:8083/mqtt");
-
-    client.on("connect", () => {
+    const client = clientRef.current;
+    if (client && client.connected) {
       client.publish("plastikit/status", ".", (err) => {
         if (err) {
           console.error("Publish error:", err);
@@ -247,9 +299,9 @@ export default function Recycle() {
           console.log("Message published: Start_confirmation");
         }
       });
-
-      client.end();
-    });
+    } else {
+      console.error("Client not connected");
+    }
   };
 
   const getTemperatureColor = (temp: number) => {
@@ -287,8 +339,10 @@ export default function Recycle() {
       {flyingGrams !== null && (
         <FlyingGrams
           style={{
-            top: gramsPositionRef.current?.getBoundingClientRect().top,
-            left: gramsPositionRef.current?.getBoundingClientRect().left,
+            top: gramsPositionRef.current
+              ? gramsPositionRef.current.getBoundingClientRect().top - 100
+              : 0,
+            left: gramsPositionRef.current?.getBoundingClientRect().left || 0,
           }}
         >
           <Typography variant="h6" component="div">
@@ -343,18 +397,14 @@ export default function Recycle() {
             </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography
-              variant="h6"
-              component="span"
-              style={{ whiteSpace: "nowrap", width: "100%" }}
-            >
+          <StyledTimelineContent>
+            <Typography variant="h6" component="span">
               Start Procedure
             </Typography>
-            <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
+            <Typography>
               Press the start button to begin the procedure
             </Typography>
-          </TimelineContent>
+          </StyledTimelineContent>
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
@@ -372,15 +422,11 @@ export default function Recycle() {
             </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography
-              variant="h6"
-              component="span"
-              style={{ whiteSpace: "nowrap", width: "100%" }}
-            >
+          <StyledTimelineContent>
+            <Typography variant="h6" component="span">
               Place the Filament and Press the Blue Button to Start
             </Typography>
-          </TimelineContent>
+          </StyledTimelineContent>
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
@@ -402,18 +448,12 @@ export default function Recycle() {
             </TimelineDot>
             <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
           </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography
-              variant="h6"
-              component="span"
-              style={{ whiteSpace: "nowrap", width: "100%" }}
-            >
+          <StyledTimelineContent>
+            <Typography variant="h6" component="span">
               Heating Up, The temperature is:
             </Typography>
             <Typography
               style={{
-                whiteSpace: "nowrap",
-                width: "100%",
                 color: temperature
                   ? getTemperatureColor(temperature)
                   : "inherit",
@@ -421,10 +461,10 @@ export default function Recycle() {
             >
               {temperature ? `${temperature} °C` : "Waiting for temperature..."}
             </Typography>
-            <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
+            <Typography>
               When the temperature is reached, the engine will start
             </Typography>
-          </TimelineContent>
+          </StyledTimelineContent>
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
@@ -438,31 +478,23 @@ export default function Recycle() {
             </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
+          <StyledTimelineContent>
             {engineStarted ? (
               <>
-                <Typography
-                  variant="h6"
-                  component="span"
-                  style={{ whiteSpace: "nowrap", width: "100%" }}
-                >
+                <Typography variant="h6" component="span">
                   The engine has been started
                 </Typography>
-                <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
+                <Typography>
                   It is transforming into a filament, long press the blue button
                   to stop
                 </Typography>
               </>
             ) : (
-              <Typography
-                variant="h6"
-                component="span"
-                style={{ whiteSpace: "nowrap", width: "100%" }}
-              >
+              <Typography variant="h6" component="span">
                 Start Engine
               </Typography>
             )}
-          </TimelineContent>
+          </StyledTimelineContent>
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
@@ -476,27 +508,23 @@ export default function Recycle() {
             </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography
-              variant="h6"
-              component="span"
-              style={{ whiteSpace: "nowrap", width: "100%" }}
-            >
+          <StyledTimelineContent>
+            <Typography variant="h6" component="span">
               Weigh Your Filament
             </Typography>
-            <Typography style={{ whiteSpace: "nowrap", width: "100%" }}>
+            <Typography>
               {isScaling
                 ? "Press the yellow button to weigh"
                 : weightMessage
                 ? `Congrats! ${weightMessage} was added to your account.`
                 : "No weight message received."}
             </Typography>
-          </TimelineContent>
+          </StyledTimelineContent>
         </TimelineItem>
       </Timeline>
-      <div ref={gramsPositionRef} style={{ marginTop: "50px" }}>
+      <StyledTotalGrams ref={gramsPositionRef}>
         You have: <strong>{totalGrams}</strong> grams
-      </div>
+      </StyledTotalGrams>
       <Footer />
     </div>
   );
