@@ -13,7 +13,7 @@ const MQTTPage: React.FC<PageProps> = ({ onMessageReceived }) => {
 
   useEffect(() => {
     // Connect to the MQTT broker
-    const client = mqtt.connect("wss://broker.emqx.io:8083/mqtt");
+    const client = mqtt.connect("wss://broker.emqx.io:8084/mqtt");
 
     // Subscribe to the topic
     client.subscribe("plastikit/status", (err) => {
