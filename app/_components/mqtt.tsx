@@ -12,8 +12,8 @@ const MQTTPage: React.FC<PageProps> = ({ onMessageReceived }) => {
   const [lastMessage, setLastMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    // Connect to the MQTT broker
-    const client = mqtt.connect("wss://broker.emqx.io:8083/mqtt");
+    // Connect to the MQTT broker using the secure WebSocket endpoint
+    const client = mqtt.connect("wss://broker.emqx.io:8084/mqtt");
 
     // Subscribe to the topic
     client.subscribe("plastikit/status", (err) => {
@@ -45,7 +45,7 @@ const MQTTPage: React.FC<PageProps> = ({ onMessageReceived }) => {
     return () => {
       client.end();
     };
-  });
+  }, [onMessageReceived]);
 
   return (
     <div>
