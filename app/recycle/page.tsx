@@ -372,9 +372,9 @@ export default function Recycle() {
           </svg>
           <span>Back</span>
         </button>
-        <div>
+        {/* <div>
           <MQTTPage onMessageReceived={handleMessageReceived} />
-        </div>
+        </div> */}
       </div>
 
       <Timeline
