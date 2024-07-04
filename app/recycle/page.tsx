@@ -305,9 +305,8 @@ export default function Recycle() {
   };
 
   const getTemperatureColor = (temp: number) => {
-    if (temp >= 240) return "red";
-    if (temp >= 200) return "orange";
-    if (temp >= 150) return "yellow";
+    if (temp >= 100) return "red";
+    if (temp >= 70) return "orange";
     return "green";
   };
 
