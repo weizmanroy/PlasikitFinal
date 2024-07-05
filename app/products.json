@@ -3,7 +3,7 @@
         {
             "id": "1",
             "name": "Elephant",
-            "description": "A majestic elephant walking through the savannah.",
+            "description": "A majestic elephant walking through the savannah",
             "grams": 120,
             "imageURL": "https://pic2-cdn.creality.com/comp/model/av/16a2e9adef64f7e636ae403271877004.avif",
             "filePath": "../STLfiles/LFS_Elephant.gcode.gz"
@@ -11,8 +11,8 @@
         {
             "id": "2",
             "name": "Benchy",
-            "description": "A small boat.",
-            "grams": 50,
+            "description": "A small boat",
+            "grams": 30,
             "imageURL": "https://cdn.thingiverse.com/renders/62/ab/d7/e3/ea/1_3D-printed_3DBenchy_by_Creative-Tools.com_display_large.JPG",
             "filePath": "../STLfiles/3dbenchy.gcode.gz"
         },
@@ -20,31 +20,31 @@
             "id": "3",
             "name": "Heart",
             "description": "A Voronoi heart",
-            "grams": 650,
+            "grams": 150,
             "imageURL": "https://pic2-cdn.creality.com/comp/model/av/f124266328215a4c5d65da655925f46a.avif",
             "filePath": "../STLfiles.VoronoiHeart.gz"
         },
         {
             "id": "4",
             "name": "Cat",
-            "description": "Lazy Cat.",
-            "grams": 180,
+            "description": "Lazy Cat",
+            "grams": 80,
             "imageURL": "https://pic2-cdn.creality.com/comp/model/av/00368f7c813c684fd1a832a35b85389b.avif",
             "filePath": "../STLfiles/Lazy_Cat_v4.gcode.gz"
         },
         {
             "id": "5",
-            "name": "Stitch",
-            "description": "A graceful giraffe grazing on tall trees.",
-            "grams": 200,
-            "imageURL": "https://blenderartists.org/uploads/default/optimized/4X/f/f/d/ffd88399c9e58e63710c128816b62bf876b068e3_2_750x750.jpg",
-            "filePath": "../STLfiles/Stitch.gcode.gz"
+            "name": "Plastikit Logo",
+            "description": "The logo of Plastikit in 3D",
+            "grams": 3,
+            "imageURL": "/pictures/models/PlastikitLogo.png",
+            "filePath": "../STLfiles/Plastikit_logo.stl"
         },
         {
             "id": "6",
-            "name": "Stretchy Fidget ",
+            "name": "Stretchy Fidget",
             "description": "Triangle, circle, and squera Stretchy Fidget",
-            "grams": 450,
+            "grams": 100,
             "imageURL": "https://pic2-cdn.creality.com/comp/model/av/c881674741350efb25125ac06d14b603.avif",
             "filePath": "../STLfiles.Stretch.gz"
         },
@@ -52,7 +52,7 @@
             "id": "7",
             "name": "Desk storage",
             "description": "Under Desk Storage Drawer Set - Two Drawer",
-            "grams": 1050,
+            "grams": 450,
             "imageURL": "https://pic2-cdn.creality.com/comp/model/av/95585835c27b4376dd4e12cf223d8938.avif",
             "filePath": "../STLfiles.Frame.gz"
         },
@@ -66,11 +66,19 @@
         },
         {
             "id": "9",
-            "name": "Spinner ",
+            "name": "Spinner",
             "description": "100mm spinner (spinning top)",
             "grams": 150,
             "imageURL": "https://pic2-cdn.creality.com/comp/model/av/95469b7a4787e7a5e1f2273b1a35e1a1.avif",
             "filePath": "../STLfiles.spinner.gz"
+        },
+        {
+            "id": "10",
+            "name": "Stitch",
+            "description": "A graceful giraffe grazing on tall trees",
+            "grams": 200,
+            "imageURL": "https://blenderartists.org/uploads/default/optimized/4X/f/f/d/ffd88399c9e58e63710c128816b62bf876b068e3_2_750x750.jpg",
+            "filePath": "../STLfiles/Stitch.gcode.gz"
         }
     ]
 }
