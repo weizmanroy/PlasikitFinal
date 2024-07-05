@@ -12,6 +12,8 @@ const nextConfig = {
       "upload.wikimedia.org",
       "blenderartists.org",
       "pic2-cdn.creality.com",
+      "plastikit.online",
+      "localhost",
     ],
   },
   reactStrictMode: true,

@@ -37,7 +37,7 @@
             "name": "Plastikit Logo",
             "description": "The logo of Plastikit in 3D",
             "grams": 3,
-            "imageURL": "/pictures/models/PlastikitLogo.png",
+            "imageURL": "https://pic2-cdn.creality.com/crealityCloud/common/bb7b2b0b20f48c6f2ccaf39cff7b3c09.webp?x-oss-process=image/resize,w_700",
             "filePath": "../STLfiles/Plastikit_logo.stl"
         },
         {

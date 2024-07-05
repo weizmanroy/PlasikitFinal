@@ -433,7 +433,7 @@ export default function Recycle() {
             <TimelineDot
               style={{
                 backgroundColor:
-                  temperature && temperature > 100 ? "red" : undefined,
+                  temperature && temperature > 70 ? "red" : undefined,
               }}
             >
               {isTempBlinking &&
