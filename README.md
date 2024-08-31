@@ -67,17 +67,17 @@ User Roles
  - Manage users, assign roles, and oversee system performance.
  - Handle data management and system maintenance.
 
-- Teacher
+- Teacher:
 
  - Manage student groups and monitor their activities.
  - Oversee recycling competitions and 3D printing requests.
  - Access and integrate educational content into the curriculum.
 
-- Student
+- Student:
 
  - Participate in recycling activities and earn points.
  - Request 3D printed items and access educational content.
- - Track personal progress and צבירת נקודות (earning points).
+ - Track personal progress and earning points.
 
 
 Operating the Plastikit Machine
@@ -85,7 +85,7 @@ Operating the Plastikit Machine
 1. Recycling Process:
    - Place a plastic bottle into the machine.
    - Press the "Start Process" button to begin cutting and melting the plastic.
-   - The machine will automatically shred, melt, and extrude the plastic into filament.
+   - Manually control the machine to shred, melt, and extrude the plastic into filament.
 
 2. 3D Printing:
    - Choose a 3D model from the dashboard.
