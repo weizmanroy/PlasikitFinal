@@ -79,6 +79,10 @@ Student:
  - Request 3D printed items and access educational content.
  - Track personal progress and earning points.
 
+Registration:
+
+During registration, users can choose to sign up as either a Student or a Teacher.
+To create a Teacher account, the system password 828282 is required.
 
 Operating the Plastikit Machine
 -------------------------------
