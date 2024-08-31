@@ -62,18 +62,18 @@ Usage Instructions
 ------------------
 User Roles
 ----------
-- Administrator:
+Administrator:
  - Full access to all system features and settings.
  - Manage users, assign roles, and oversee system performance.
  - Handle data management and system maintenance.
 
-- Teacher:
+Teacher:
 
  - Manage student groups and monitor their activities.
  - Oversee recycling competitions and 3D printing requests.
  - Access and integrate educational content into the curriculum.
 
-- Student:
+Student:
 
  - Participate in recycling activities and earn points.
  - Request 3D printed items and access educational content.
